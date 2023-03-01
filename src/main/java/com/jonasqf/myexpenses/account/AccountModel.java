@@ -32,7 +32,8 @@ public class AccountModel {
     private BigDecimal balance;
 
 
-    public AccountModel(String description, String category, int numberPayment, BigDecimal totalAmount, BigDecimal downPayment) {
+    public AccountModel(String description, String category, int numberPayment,
+                        BigDecimal totalAmount, BigDecimal downPayment) {
         this.description = description;
         this.category = category;
         this.numberPayment = numberPayment;
