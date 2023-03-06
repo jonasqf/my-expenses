@@ -1,14 +1,13 @@
-package com.jonasqf.myexpenses.account;
+package com.jonasqf.myexpenses.transaction;
 
 
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 
 @Entity
-@Table(name="account")
-public class AccountModel {
+@Table(name="transaction")
+public class Transaction {
 
     @Id
     @Column(name = "id", columnDefinition = "serial")
@@ -32,13 +31,21 @@ public class AccountModel {
     private BigDecimal balance;
 
 
-    public AccountModel(String description, String category, int numberPayment,
-                        BigDecimal totalAmount, BigDecimal downPayment) {
+    public Transaction(String description, String category, int numberPayment,
+                       BigDecimal totalAmount, BigDecimal downPayment) {
         this.description = description;
         this.category = category;
         this.numberPayment = numberPayment;
         this.totalAmount = totalAmount;
         this.downPayment = downPayment;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDescription() {
