@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TransactionService {
@@ -31,7 +32,7 @@ public class TransactionService {
         transactionRepository.delete(transaction);
     }
 
-    public Optional <Transaction> findById(Integer id) {
+    public Optional <Transaction> findById(UUID id) {
         return transactionRepository.findById(id);
 
     }

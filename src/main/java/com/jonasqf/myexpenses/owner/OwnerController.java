@@ -1,4 +1,4 @@
-package com.jonasqf.myexpenses.transaction;
+package com.jonasqf.myexpenses.owner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,29 +11,29 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/v1/transactions")
-public class TransactionController {
+@RequestMapping("api/v1/owners")
+public class OwnerController {
 
     @Autowired
-    TransactionService transactionService;
+    OwnerService ownerService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Transaction> register(@RequestBody Transaction transaction) {
+    public ResponseEntity<Owner> register(@RequestBody Owner owner) {
 
-        Transaction newTransaction = transactionService.register(transaction);
-        return new ResponseEntity<>(newTransaction, HttpStatus.CREATED);
+        Owner newOwner = ownerService.register(owner);
+        return new ResponseEntity<>(newOwner, HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<Transaction>> findAll() {
+    public ResponseEntity<Collection<Owner>> findAll() {
 
-        Collection<Transaction> findAll = transactionService.findAll();
+        Collection<Owner> findAll = ownerService.findAll();
         return new ResponseEntity<>(findAll, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Transaction> findById(@PathVariable UUID id){
-        Optional<Transaction> findById = transactionService.findById(id);
+    public ResponseEntity<Owner> findById(@PathVariable UUID id){
+        Optional<Owner> findById = ownerService.findById(id);
         if (findById.isPresent()) {
             return new ResponseEntity<>(findById.get(), HttpStatus.OK);
         } else {
@@ -42,22 +42,22 @@ public class TransactionController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-    public ResponseEntity<Transaction> delete(@PathVariable UUID id) {
+    public ResponseEntity<Owner> delete(@PathVariable UUID id) {
 
-        Optional<Transaction> deleted = transactionService.findById(id);
+        Optional<Owner> deleted = ownerService.findById(id);
         if (deleted.isPresent()) {
             return new ResponseEntity<>(deleted.get(), HttpStatus.NOT_FOUND);
         }
-        transactionService.delete(deleted.get());
+        ownerService.delete(deleted.get());
         return new ResponseEntity<>(deleted.get(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Transaction> update(@RequestBody Transaction transaction) {
+    public ResponseEntity<Owner> update(@RequestBody Owner account) {
 
-        transactionService.update(transaction);
-        return new ResponseEntity<>(transaction, HttpStatus.OK);
+        ownerService.update(account);
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
 }
