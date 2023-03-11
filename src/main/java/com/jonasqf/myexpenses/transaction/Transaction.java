@@ -2,97 +2,50 @@ package com.jonasqf.myexpenses.transaction;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name="transaction")
+@NoArgsConstructor
 public class Transaction {
 
     @Id
     @Column(name = "id", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter
+    @Setter
     private Integer id;
     @Column(name = "description")
+    @Getter
+    @Setter
     private String description;
     @Column(name = "category")
+    @Getter
+    @Setter
     private String category;
 
     @Column(name="number_payment")
+    @Getter
+    @Setter
     private int numberPayment;
 
     @Column(name="total_amount")
+    @Getter
+    @Setter
     private BigDecimal totalAmount;
 
     @Column(name="down_payment")
+    @Getter
+    @Setter
     private BigDecimal downPayment;
 
     @Column(name="balance")
+    @Getter
+    @Setter
     private BigDecimal balance;
 
-
-    public Transaction(String description, String category, int numberPayment,
-                       BigDecimal totalAmount, BigDecimal downPayment) {
-        this.description = description;
-        this.category = category;
-        this.numberPayment = numberPayment;
-        this.totalAmount = totalAmount;
-        this.downPayment = downPayment;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public int getNumberPayment() {
-        return numberPayment;
-    }
-
-    public void setNumberPayment(int numberPayment) {
-        this.numberPayment = numberPayment;
-    }
-
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public BigDecimal getDownPayment() {
-        return downPayment;
-    }
-
-    public void setDownPayment(BigDecimal downPayment) {
-        this.downPayment = downPayment;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
 }
