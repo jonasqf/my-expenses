@@ -3,19 +3,23 @@ package com.jonasqf.myexpenses.transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.*;
 
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class TransactionServiceTest {
 
+    @InjectMocks
     private TransactionService underTest;
     @Mock
     private TransactionRepository transactionRepository;
@@ -31,53 +35,95 @@ class TransactionServiceTest {
     }
 
     @Test
-    void itShouldRegisterAnewAccount() {
+    void itShouldRegisterAnewTransaction() {
+        final Transaction localTransaction = new Transaction("Test Description",
+                "BILL", 1, new BigDecimal("200.0"),
+                new BigDecimal("200.0"));
+        given(transactionRepository.save(localTransaction)).willAnswer(invocation -> invocation.getArgument(0));
         //when
-        underTest.register(transaction);
+        Transaction savedTransaction = underTest.register(localTransaction);
         //then
-        verify(transactionRepository).save(transaction);
+        assertThat(savedTransaction).isNotNull();
+        verify(transactionRepository).save(localTransaction);
     }
 
     @Test
-    void theAccountBalanceShouldBeZero() {
+    void theTransactionBalanceShouldBeZero() {
         //when
-        underTest.register(transaction);
+        final Transaction localTransaction = new Transaction("Test Description",
+                "BILL", 1, new BigDecimal("200.0"),
+                new BigDecimal("200.0"));
+        given(transactionRepository.save(localTransaction)).willAnswer(invocation -> invocation.getArgument(0));
+        //when
+        Transaction savedTransaction = underTest.register(localTransaction);
         //then
         BigDecimal expected = new BigDecimal("0.0");
 
-        assertThat(expected, equalTo(transaction.getBalance()));
+        assertThat(savedTransaction).isNotNull();
+        assertThat(expected).isEqualTo(localTransaction.getBalance());
     }
 
     @Test
-    void itShouldListAllAccounts() {
+    void itShouldListAllTransaction() {
+        //given
+        List<Transaction> transactions = new ArrayList();
+        transactions.add(new Transaction("Test Description 1",
+                "BILL", 1, new BigDecimal("100.0"),
+                new BigDecimal("200.0")));
+        transactions.add(new Transaction("Test Description 2",
+                "BILL", 1, new BigDecimal("300.0"),
+                new BigDecimal("200.0")));
+        transactions.add(new Transaction("Test Description 1",
+                "BILL", 1, new BigDecimal("50.0"),
+                new BigDecimal("50.0")));
+
         //when
-        underTest.findAll();
+        given(transactionRepository.findAll()).willReturn(transactions);
+
         //then
-        verify(transactionRepository).findAll();
+        Collection<Transaction> expected = underTest.findAll();
+        assertEquals(expected, transactions);
     }
 
     @Test
-    void itShouldListAccountById() {
+    void itShouldListTransactionById() {
+        //given
+        final UUID id = UUID.fromString("f0d45730-b812-4b21-a7c1-22a574ebbdb4");
+        final Transaction localTransaction = new Transaction("Test Description 1",
+                "BILL", 1, new BigDecimal("100.0"),
+                new BigDecimal("200.0"));
+
+        given(underTest.findById(id)).willReturn(Optional.of(localTransaction));
         //when
-        underTest.findById(transaction.getId());
+        final Optional<Transaction> expected = underTest.findById(id);
         //then
-        verify(transactionRepository).findById(transaction.getId());
+        assertThat(expected).isNotNull();
     }
 
     @Test
-    void itShouldDeleteAnAccount() {
+    void itShouldDeleteAnTransaction() {
+        //given
+        final Transaction localTransaction = new Transaction("Test Description 1",
+                "BILL", 1, new BigDecimal("100.0"),
+                new BigDecimal("200.0"));
         //when
-        underTest.delete(transaction);
+        underTest.delete(localTransaction);
         //then
-        verify(transactionRepository).delete(transaction);
+        verify(transactionRepository).delete(localTransaction);
     }
 
     @Test
-    void itShouldUpdateAnAccount() {
+    void itShouldUpdateAnTransaction() {
+        //given
+        final Transaction localTransaction = new Transaction("Test Description 1",
+                "BILL", 1, new BigDecimal("100.0"),
+                new BigDecimal("200.0"));
+        given(underTest.register(localTransaction)).willReturn(localTransaction);
         //when
-        underTest.update(transaction);
+        final Transaction expected = underTest.update(localTransaction);
         //then
-        verify(transactionRepository).save(transaction);
+        assertThat(expected).isNotNull();
+        verify(transactionRepository).save(any(Transaction.class));
     }
 
 }

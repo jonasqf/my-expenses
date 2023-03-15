@@ -47,4 +47,5 @@ public class Transaction {
         this.totalAmount = totalAmount;
         this.downPayment = downPayment;
     }
+
 }

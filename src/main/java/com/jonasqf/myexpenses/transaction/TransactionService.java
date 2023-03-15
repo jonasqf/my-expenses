@@ -37,7 +37,8 @@ public class TransactionService {
 
     }
 
-    public void update(Transaction transaction) {
+    public Transaction update(Transaction transaction) {
         transactionRepository.save(transaction);
+        return transaction;
     }
 }
