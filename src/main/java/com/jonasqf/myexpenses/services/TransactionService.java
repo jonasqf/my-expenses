@@ -1,5 +1,7 @@
-package com.jonasqf.myexpenses.transaction;
+package com.jonasqf.myexpenses.services;
 
+import com.jonasqf.myexpenses.entities.Transaction;
+import com.jonasqf.myexpenses.repositories.TransactionRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -33,6 +35,7 @@ public class TransactionService {
     }
 
     public Optional <Transaction> findById(UUID id) {
+
         return transactionRepository.findById(id);
 
     }

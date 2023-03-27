@@ -1,5 +1,7 @@
-package com.jonasqf.myexpenses.account;
+package com.jonasqf.myexpenses.services;
 
+import com.jonasqf.myexpenses.entities.Account;
+import com.jonasqf.myexpenses.repositories.AccountRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

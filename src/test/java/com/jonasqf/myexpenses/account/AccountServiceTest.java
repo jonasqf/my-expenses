@@ -1,5 +1,8 @@
 package com.jonasqf.myexpenses.account;
 
+import com.jonasqf.myexpenses.entities.Account;
+import com.jonasqf.myexpenses.repositories.AccountRepository;
+import com.jonasqf.myexpenses.services.AccountService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +27,7 @@ class AccountServiceTest {
     @BeforeEach
     void setUp() {
         underTest = new AccountService(accountRepository);
-        account = new Account();
+        account = new Account(BigDecimal.ZERO, null);
     }
 
     @Test

@@ -1,5 +1,7 @@
-package com.jonasqf.myexpenses.owner;
+package com.jonasqf.myexpenses.controllers;
 
+import com.jonasqf.myexpenses.entities.Owner;
+import com.jonasqf.myexpenses.services.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

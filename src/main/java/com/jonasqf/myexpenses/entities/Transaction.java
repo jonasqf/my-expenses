@@ -1,4 +1,4 @@
-package com.jonasqf.myexpenses.transaction;
+package com.jonasqf.myexpenses.entities;
 
 
 import jakarta.persistence.*;
@@ -19,7 +19,7 @@ import java.util.UUID;
 public class Transaction {
 
     @Id
-    @Column(name = "id", columnDefinition = "serial")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Column(name = "description")

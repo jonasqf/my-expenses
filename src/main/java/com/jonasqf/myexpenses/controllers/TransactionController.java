@@ -1,5 +1,7 @@
-package com.jonasqf.myexpenses.transaction;
+package com.jonasqf.myexpenses.controllers;
 
+import com.jonasqf.myexpenses.entities.Transaction;
+import com.jonasqf.myexpenses.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +18,10 @@ public class TransactionController {
 
     @Autowired
     TransactionService transactionService;
+
+    public TransactionController(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Transaction> register(@RequestBody Transaction transaction) {
@@ -37,7 +43,7 @@ public class TransactionController {
         if (findById.isPresent()) {
             return new ResponseEntity<>(findById.get(), HttpStatus.OK);
         } else {
-            throw new RuntimeException();
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 

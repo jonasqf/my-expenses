@@ -1,33 +1,29 @@
-package com.jonasqf.myexpenses.account;
+package com.jonasqf.myexpenses.entities;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Entity
-@Table(name="transaction")
+
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Getter
+@Setter
+@Table(name="account")
 public class Account {
 
     @Id
-    @Column(name = "id", columnDefinition = "serial")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Getter
-    @Setter
     private UUID id;
-    @Column(name="balance")
-    @Getter
-    @Setter
     private BigDecimal balance;
 
     @Column(name="owner_id")
-    @Getter
-    @Setter
     private UUID ownerId;
 
     public Account(BigDecimal balance, UUID ownerId) {

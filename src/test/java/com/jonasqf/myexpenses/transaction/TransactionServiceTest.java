@@ -1,5 +1,8 @@
 package com.jonasqf.myexpenses.transaction;
 
+import com.jonasqf.myexpenses.entities.Transaction;
+import com.jonasqf.myexpenses.repositories.TransactionRepository;
+import com.jonasqf.myexpenses.services.TransactionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,31 +39,26 @@ class TransactionServiceTest {
 
     @Test
     void itShouldRegisterAnewTransaction() {
-        final Transaction localTransaction = new Transaction("Test Description",
-                "BILL", 1, new BigDecimal("200.0"),
-                new BigDecimal("200.0"));
-        given(transactionRepository.save(localTransaction)).willAnswer(invocation -> invocation.getArgument(0));
+
+        given(transactionRepository.save(transaction)).willAnswer(invocation -> invocation.getArgument(0));
         //when
-        Transaction savedTransaction = underTest.register(localTransaction);
+        Transaction savedTransaction = underTest.register(transaction);
         //then
         assertThat(savedTransaction).isNotNull();
-        verify(transactionRepository).save(localTransaction);
+        verify(transactionRepository).save(transaction);
     }
 
     @Test
     void theTransactionBalanceShouldBeZero() {
+
+        given(transactionRepository.save(transaction)).willAnswer(invocation -> invocation.getArgument(0));
         //when
-        final Transaction localTransaction = new Transaction("Test Description",
-                "BILL", 1, new BigDecimal("200.0"),
-                new BigDecimal("200.0"));
-        given(transactionRepository.save(localTransaction)).willAnswer(invocation -> invocation.getArgument(0));
-        //when
-        Transaction savedTransaction = underTest.register(localTransaction);
+        Transaction savedTransaction = underTest.register(transaction);
         //then
         BigDecimal expected = new BigDecimal("0.0");
 
         assertThat(savedTransaction).isNotNull();
-        assertThat(expected).isEqualTo(localTransaction.getBalance());
+        assertThat(expected).isEqualTo(transaction.getBalance());
     }
 
     @Test
@@ -89,11 +87,8 @@ class TransactionServiceTest {
     void itShouldListTransactionById() {
         //given
         final UUID id = UUID.fromString("f0d45730-b812-4b21-a7c1-22a574ebbdb4");
-        final Transaction localTransaction = new Transaction("Test Description 1",
-                "BILL", 1, new BigDecimal("100.0"),
-                new BigDecimal("200.0"));
 
-        given(underTest.findById(id)).willReturn(Optional.of(localTransaction));
+        given(underTest.findById(id)).willReturn(Optional.of(transaction));
         //when
         final Optional<Transaction> expected = underTest.findById(id);
         //then
@@ -102,25 +97,17 @@ class TransactionServiceTest {
 
     @Test
     void itShouldDeleteAnTransaction() {
-        //given
-        final Transaction localTransaction = new Transaction("Test Description 1",
-                "BILL", 1, new BigDecimal("100.0"),
-                new BigDecimal("200.0"));
         //when
-        underTest.delete(localTransaction);
+        underTest.delete(transaction);
         //then
-        verify(transactionRepository).delete(localTransaction);
+        verify(transactionRepository).delete(transaction);
     }
 
     @Test
     void itShouldUpdateAnTransaction() {
-        //given
-        final Transaction localTransaction = new Transaction("Test Description 1",
-                "BILL", 1, new BigDecimal("100.0"),
-                new BigDecimal("200.0"));
-        given(underTest.register(localTransaction)).willReturn(localTransaction);
+        given(underTest.register(transaction)).willReturn(transaction);
         //when
-        final Transaction expected = underTest.update(localTransaction);
+        final Transaction expected = underTest.update(transaction);
         //then
         assertThat(expected).isNotNull();
         verify(transactionRepository).save(any(Transaction.class));
