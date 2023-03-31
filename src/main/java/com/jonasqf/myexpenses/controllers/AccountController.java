@@ -39,7 +39,7 @@ public class AccountController {
         if (findById.isPresent()) {
             return new ResponseEntity<>(findById.get(), HttpStatus.OK);
         } else {
-            throw new RuntimeException();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -48,10 +48,10 @@ public class AccountController {
 
         Optional<Account> deleted = accountService.findById(id);
         if (deleted.isPresent()) {
-            return new ResponseEntity<>(deleted.get(), HttpStatus.NOT_FOUND);
+            accountService.delete(deleted.get());
+            return new ResponseEntity<>(deleted.get(), HttpStatus.OK);
         }
-        accountService.delete(deleted.get());
-        return new ResponseEntity<>(deleted.get(), HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/", consumes = MediaType.APPLICATION_JSON_VALUE,

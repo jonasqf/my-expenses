@@ -29,8 +29,8 @@ public class AccountService {
     }
 
 
-    public void delete(Account transaction) {
-        accountRepository.delete(transaction);
+    public void delete(Account account) {
+        accountRepository.delete(account);
     }
 
     public Optional <Account> findById(UUID id) {
