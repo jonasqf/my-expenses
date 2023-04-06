@@ -4,7 +4,6 @@ import com.jonasqf.myexpenses.entities.Transaction;
 import com.jonasqf.myexpenses.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,44 +22,41 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+   @PostMapping(path = "/")
     public ResponseEntity<Transaction> register(@RequestBody Transaction transaction) {
 
         Transaction newTransaction = transactionService.register(transaction);
         return new ResponseEntity<>(newTransaction, HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+   @GetMapping(path = "/")
     public ResponseEntity<Collection<Transaction>> findAll() {
 
         Collection<Transaction> findAll = transactionService.findAll();
         return new ResponseEntity<>(findAll, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/{id}")
     public ResponseEntity<Transaction> findById(@PathVariable UUID id){
         Optional<Transaction> findById = transactionService.findById(id);
         if (findById.isPresent()) {
             return new ResponseEntity<>(findById.get(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<Transaction> delete(@PathVariable UUID id) {
-
         Optional<Transaction> deleted = transactionService.findById(id);
         if (deleted.isPresent()) {
             transactionService.delete(deleted.get());
             return new ResponseEntity<>(deleted.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(deleted.get(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id}"
-            , consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/{id}")
     public ResponseEntity<Transaction> update(@RequestBody Transaction transaction) {
 
         transactionService.update(transaction);

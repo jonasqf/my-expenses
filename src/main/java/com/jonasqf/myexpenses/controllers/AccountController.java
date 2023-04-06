@@ -4,7 +4,6 @@ import com.jonasqf.myexpenses.entities.Account;
 import com.jonasqf.myexpenses.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,21 +18,21 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/")
     public ResponseEntity<Account> register(@RequestBody Account account) {
 
         Account newOwner = accountService.register(account);
         return new ResponseEntity<>(newOwner, HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/")
     public ResponseEntity<Collection<Account>> findAll() {
 
         Collection<Account> findAll = accountService.findAll();
         return new ResponseEntity<>(findAll, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+   @GetMapping(path = "/{id}")
     public ResponseEntity<Account> findById(@PathVariable UUID id){
         Optional<Account> findById = accountService.findById(id);
         if (findById.isPresent()) {
@@ -43,7 +42,7 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<Account> delete(@PathVariable UUID id) {
         Optional<Account> deleted = accountService.findById(id);
         if (deleted.isPresent()) {
@@ -54,9 +53,7 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id}"
-            ,consumes = MediaType.APPLICATION_JSON_VALUE
-            ,produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/{id}")
     public ResponseEntity<Account> update(@RequestBody Account account) {
 
         accountService.update(account);
