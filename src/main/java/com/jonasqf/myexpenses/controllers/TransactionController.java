@@ -52,13 +52,14 @@ public class TransactionController {
 
         Optional<Transaction> deleted = transactionService.findById(id);
         if (deleted.isPresent()) {
-            return new ResponseEntity<>(deleted.get(), HttpStatus.NOT_FOUND);
+            transactionService.delete(deleted.get());
+            return new ResponseEntity<>(deleted.get(), HttpStatus.OK);
         }
-        transactionService.delete(deleted.get());
-        return new ResponseEntity<>(deleted.get(), HttpStatus.OK);
+        return new ResponseEntity<>(deleted.get(), HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/", consumes = MediaType.APPLICATION_JSON_VALUE,
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}"
+            , consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Transaction> update(@RequestBody Transaction transaction) {
 

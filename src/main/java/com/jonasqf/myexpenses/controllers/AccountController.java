@@ -45,17 +45,18 @@ public class AccountController {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public ResponseEntity<Account> delete(@PathVariable UUID id) {
-
         Optional<Account> deleted = accountService.findById(id);
         if (deleted.isPresent()) {
             accountService.delete(deleted.get());
             return new ResponseEntity<>(deleted.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/", consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}"
+            ,consumes = MediaType.APPLICATION_JSON_VALUE
+            ,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Account> update(@RequestBody Account account) {
 
         accountService.update(account);

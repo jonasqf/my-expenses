@@ -38,7 +38,7 @@ public class AccountService {
 
     }
 
-    public void update(Account transaction) {
-        accountRepository.save(transaction);
+    public void update(Account account) {
+        accountRepository.save(account);
     }
 }

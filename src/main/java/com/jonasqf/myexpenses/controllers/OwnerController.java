@@ -48,18 +48,20 @@ public class OwnerController {
 
         Optional<Owner> deleted = ownerService.findById(id);
         if (deleted.isPresent()) {
-            return new ResponseEntity<>(deleted.get(), HttpStatus.NOT_FOUND);
+            ownerService.delete(deleted.get());
+            return new ResponseEntity<>(deleted.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        ownerService.delete(deleted.get());
-        return new ResponseEntity<>(deleted.get(), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/", consumes = MediaType.APPLICATION_JSON_VALUE,
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}"
+            , consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Owner> update(@RequestBody Owner account) {
+    public ResponseEntity<Owner> update(@RequestBody Owner owner) {
 
-        ownerService.update(account);
-        return new ResponseEntity<>(account, HttpStatus.OK);
+        ownerService.update(owner);
+        return new ResponseEntity<>(owner, HttpStatus.OK);
     }
 
 }

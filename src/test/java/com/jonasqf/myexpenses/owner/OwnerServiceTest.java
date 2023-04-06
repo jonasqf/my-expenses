@@ -1,85 +1,58 @@
 package com.jonasqf.myexpenses.owner;
 
-import com.jonasqf.myexpenses.entities.Transaction;
-import com.jonasqf.myexpenses.repositories.TransactionRepository;
-import com.jonasqf.myexpenses.services.TransactionService;
+import com.jonasqf.myexpenses.entities.Owner;
+import com.jonasqf.myexpenses.repositories.OwnerRepository;
+import com.jonasqf.myexpenses.services.OwnerService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class OwnerServiceTest {
 
-    private TransactionService underTest;
+    private OwnerService underTest;
     @Mock
-    private TransactionRepository transactionRepository;
-    private Transaction transaction;
-
+    private OwnerRepository ownerRepository;
+    private Owner owner;
 
     @BeforeEach
     void setUp() {
-        underTest = new TransactionService(transactionRepository);
-        transaction = new Transaction("Test Description",
-                "BILL", 1, new BigDecimal("200.0"),
-                new BigDecimal("200.0"));
+        underTest = new OwnerService(ownerRepository);
+        owner = new Owner("Jonas", "Flach");
     }
 
     @Test
-    void itShouldRegisterAnewAccount() {
-        //when
-        underTest.register(transaction);
-        //then
-        verify(transactionRepository).save(transaction);
+    void itShouldRegisterAnewOwner() {
+        underTest.register(owner);
+        verify(ownerRepository).save(owner);
     }
 
     @Test
-    void theAccountBalanceShouldBeZero() {
-        //when
-        underTest.register(transaction);
-        //then
-        BigDecimal expected = new BigDecimal("0.0");
-
-        assertThat(expected, equalTo(transaction.getBalance()));
-    }
-
-    @Test
-    void itShouldListAllAccounts() {
-        //when
+    void itShouldFindAllOwners() {
         underTest.findAll();
-        //then
-        verify(transactionRepository).findAll();
+        verify(ownerRepository).findAll();
     }
 
     @Test
-    void itShouldListAccountById() {
-        //when
-        underTest.findById(transaction.getId());
-        //then
-        verify(transactionRepository).findById(transaction.getId());
+    void itShouldDelete() {
+        underTest.delete(owner);
+        verify(ownerRepository).delete(owner);
     }
 
     @Test
-    void itShouldDeleteAnAccount() {
-        //when
-        underTest.delete(transaction);
-        //then
-        verify(transactionRepository).delete(transaction);
+    void itShouldFindById() {
+        underTest.findById(owner.getId());
+        verify(ownerRepository).findById(owner.getId());
     }
 
     @Test
-    void itShouldUpdateAnAccount() {
-        //when
-        underTest.update(transaction);
-        //then
-        verify(transactionRepository).save(transaction);
+    void itShouldUpdate() {
+        underTest.update(owner);
+        verify(ownerRepository).save(owner);
     }
-
 }

@@ -15,7 +15,6 @@ import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -105,12 +104,9 @@ class TransactionServiceTest {
 
     @Test
     void itShouldUpdateAnTransaction() {
-        given(underTest.register(transaction)).willReturn(transaction);
-        //when
-        final Transaction expected = underTest.update(transaction);
+        underTest.update(transaction);
         //then
-        assertThat(expected).isNotNull();
-        verify(transactionRepository).save(any(Transaction.class));
+        verify(transactionRepository).save(transaction);
     }
 
 }

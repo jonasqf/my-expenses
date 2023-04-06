@@ -31,6 +31,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -129,5 +130,19 @@ class AccountControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/accounts/" + account.getId())
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.status().isNotFound());
-}
+    }
+    @Test
+    void update_an_account_successfully() throws Exception {
+        BigDecimal newBalance = BigDecimal.TEN;
+        account.setBalance(newBalance);
+
+        doNothing().when(accountService).update(account);
+
+        ResultActions response = mockMvc.perform(put("/api/v1/accounts/"+ account.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(account)));
+        response.andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id"
+                        , CoreMatchers.is(account.getId().toString())));
+    }
 }
