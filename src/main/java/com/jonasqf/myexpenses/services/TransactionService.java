@@ -19,7 +19,7 @@ public class TransactionService {
     }
 
     public Transaction register(Transaction transaction) {
-        BigDecimal currentBalance = BigDecimal.ZERO;
+        BigDecimal currentBalance;
         currentBalance = transaction.getTotalAmount().subtract(transaction.getDownPayment());
         transaction.setBalance(currentBalance);
         return transactionRepository.save(transaction);

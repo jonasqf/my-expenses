@@ -14,14 +14,12 @@ import java.util.UUID;
 @Setter
 @Table(name="owner")
 public class Owner {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Column(name="first_name")
     private String firstName;
-
     @Column(name="last_name")
     private String lastName;
 

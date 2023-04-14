@@ -5,7 +5,6 @@ import com.jonasqf.myexpenses.repositories.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,9 +19,8 @@ public class OwnerService {
         this.ownerRepository = accountRepository;
     }
 
-    public Owner register(Owner account) {
-        BigDecimal currentBalance = BigDecimal.ZERO;
-        return ownerRepository.save(account);
+    public Owner register(Owner owner) {
+        return ownerRepository.save(owner);
     }
 
     public Collection<Owner> findAll() {
@@ -30,8 +28,8 @@ public class OwnerService {
     }
 
 
-    public void delete(Owner transaction) {
-        ownerRepository.delete(transaction);
+    public void delete(Owner owner) {
+        ownerRepository.delete(owner);
     }
 
     public Optional <Owner> findById(UUID id) {
@@ -39,7 +37,7 @@ public class OwnerService {
 
     }
 
-    public void update(Owner transaction) {
-        ownerRepository.save(transaction);
+    public void update(Owner owner) {
+        ownerRepository.save(owner);
     }
 }

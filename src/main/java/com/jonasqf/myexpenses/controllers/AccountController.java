@@ -2,7 +2,6 @@ package com.jonasqf.myexpenses.controllers;
 
 import com.jonasqf.myexpenses.entities.Account;
 import com.jonasqf.myexpenses.services.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +14,20 @@ import java.util.UUID;
 @RequestMapping("api/v1/accounts")
 public class AccountController {
 
-    @Autowired
-    AccountService accountService;
+    private final AccountService accountService;
 
-    @PostMapping(path = "/")
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
+
+    @PostMapping
     public ResponseEntity<Account> register(@RequestBody Account account) {
 
         Account newOwner = accountService.register(account);
         return new ResponseEntity<>(newOwner, HttpStatus.CREATED);
     }
 
-    @GetMapping(path = "/")
+    @GetMapping
     public ResponseEntity<Collection<Account>> findAll() {
 
         Collection<Account> findAll = accountService.findAll();

@@ -2,7 +2,7 @@ package com.jonasqf.myexpenses.controllers;
 
 import com.jonasqf.myexpenses.entities.Owner;
 import com.jonasqf.myexpenses.services.OwnerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,21 +11,25 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequestMapping("api/v1/owners")
 public class OwnerController {
 
-    @Autowired
-    OwnerService ownerService;
+    private final OwnerService ownerService;
 
-    @PostMapping(path = "/")
+    public OwnerController(OwnerService ownerService) {
+        this.ownerService = ownerService;
+    }
+
+    @PostMapping
     public ResponseEntity<Owner> register(@RequestBody Owner owner) {
 
         Owner newOwner = ownerService.register(owner);
         return new ResponseEntity<>(newOwner, HttpStatus.CREATED);
     }
 
-    @GetMapping(path = "/")
+    @GetMapping
     public ResponseEntity<Collection<Owner>> findAll() {
 
         Collection<Owner> findAll = ownerService.findAll();

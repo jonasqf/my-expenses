@@ -60,7 +60,7 @@ class TransactionControllerTest {
         given(transactionService.register(ArgumentMatchers.any()))
                 .willAnswer((invocation -> invocation.getArgument(0)));
 
-        ResultActions response = mockMvc.perform(post("/api/v1/transactions/")
+        ResultActions response = mockMvc.perform(post("/api/v1/transactions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(transaction)));
 
@@ -85,7 +85,7 @@ class TransactionControllerTest {
 
         when(transactionService.findAll()).thenReturn(transactionList);
 
-        ResultActions response = mockMvc.perform(get("/api/v1/transactions/")
+        ResultActions response = mockMvc.perform(get("/api/v1/transactions")
                 .contentType(MediaType.APPLICATION_JSON));
 
         response.andExpect(status().isOk())

@@ -2,7 +2,6 @@ package com.jonasqf.myexpenses.controllers;
 
 import com.jonasqf.myexpenses.entities.Transaction;
 import com.jonasqf.myexpenses.services.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,21 +14,20 @@ import java.util.UUID;
 @RequestMapping("api/v1/transactions")
 public class TransactionController {
 
-    @Autowired
-    TransactionService transactionService;
+    private final TransactionService transactionService;
 
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
     }
 
-   @PostMapping(path = "/")
+   @PostMapping
     public ResponseEntity<Transaction> register(@RequestBody Transaction transaction) {
 
         Transaction newTransaction = transactionService.register(transaction);
         return new ResponseEntity<>(newTransaction, HttpStatus.CREATED);
     }
 
-   @GetMapping(path = "/")
+   @GetMapping
     public ResponseEntity<Collection<Transaction>> findAll() {
 
         Collection<Transaction> findAll = transactionService.findAll();

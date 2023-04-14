@@ -54,7 +54,7 @@ class OwnerControllerTest {
         given(ownerService.register(ArgumentMatchers.any()))
                 .willAnswer((invocation -> invocation.getArgument(0)));
 
-        ResultActions response = mockMvc.perform(post("/api/v1/owners/")
+        ResultActions response = mockMvc.perform(post("/api/v1/owners")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(owner)));
 
@@ -72,7 +72,7 @@ class OwnerControllerTest {
 
         when(ownerService.findAll()).thenReturn(ownerList);
 
-        ResultActions response = mockMvc.perform(get("/api/v1/owners/")
+        ResultActions response = mockMvc.perform(get("/api/v1/owners")
                 .contentType(MediaType.APPLICATION_JSON));
 
         response.andExpect(status().isOk())

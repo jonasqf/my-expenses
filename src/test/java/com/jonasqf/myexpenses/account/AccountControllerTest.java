@@ -62,7 +62,7 @@ class AccountControllerTest {
         given(accountService.register(ArgumentMatchers.any()))
                 .willAnswer((invocation -> invocation.getArgument(0)));
 
-        ResultActions response = mockMvc.perform(post("/api/v1/accounts/")
+        ResultActions response = mockMvc.perform(post("/api/v1/accounts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(account)));
         response.andExpect(status().isCreated())
@@ -78,7 +78,7 @@ class AccountControllerTest {
 
         when(accountService.findAll()).thenReturn(accountsList);
 
-        ResultActions response = mockMvc.perform(get("/api/v1/accounts/")
+        ResultActions response = mockMvc.perform(get("/api/v1/accounts")
                 .contentType(MediaType.APPLICATION_JSON));
 
         response.andExpect(status().isOk())
@@ -100,7 +100,7 @@ class AccountControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is(account.getId().toString())));
     }
     @Test
-    public void findById_throwsRuntimeException_whenInvalidIdProvided() throws Exception {
+    void findById_throwsRuntimeException_whenInvalidIdProvided() throws Exception {
         // Given
         UUID id = UUID.randomUUID();
         // When
