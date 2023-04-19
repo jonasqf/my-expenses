@@ -31,7 +31,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void itShouldRegisterAnewAccount() {
+    void registerAccount() {
         //when
         underTest.register(account);
         //then
@@ -39,7 +39,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void theAccountBalanceShouldBeZero() {
+    void registerAccount_thenBalanceShouldBeZero() {
         //when
         underTest.register(account);
         //then
@@ -49,7 +49,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void itShouldListAllAccounts() {
+    void getAllAccounts() {
         //when
         underTest.findAll();
         //then
@@ -57,7 +57,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void itShouldListAccountById() {
+    void getAccount_ById() {
         //when
         underTest.findById(account.getId());
         //then
@@ -65,7 +65,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void itShouldDeleteAnAccount() {
+    void deleteAccount() {
         //when
         underTest.delete(account);
         //then
@@ -73,7 +73,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void itShouldUpdateAnAccount() {
+    void updateAccount() {
         //when
         underTest.update(account);
         //then

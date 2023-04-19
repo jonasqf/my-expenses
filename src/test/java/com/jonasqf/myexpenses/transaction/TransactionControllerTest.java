@@ -51,7 +51,8 @@ class TransactionControllerTest {
     void setUp() {
         transaction = new Transaction("Test Description",
                 "BILL", 1, new BigDecimal("200.0"),
-                new BigDecimal("200.0"));
+                new BigDecimal("200.0"),
+                UUID.randomUUID());
         transaction.setId(id);
     }
 
@@ -75,13 +76,16 @@ class TransactionControllerTest {
         List<Transaction> transactionList = new ArrayList<>();
         transactionList.add(new Transaction("Test Description 1",
                 "BILL", 1, new BigDecimal("200.0"),
-                new BigDecimal("200.0")));
+                new BigDecimal("200.0"),
+                UUID.randomUUID()));
         transactionList.add(new Transaction("Test Description 2",
                 "BILL", 1, new BigDecimal("200.0"),
-                new BigDecimal("200.0")));
+                new BigDecimal("200.0"),
+                UUID.randomUUID()));
         transactionList.add(new Transaction("Test Description 3",
                 "BILL", 1, new BigDecimal("200.0"),
-                new BigDecimal("200.0")));
+                new BigDecimal("200.0"),
+                UUID.randomUUID()));
 
         when(transactionService.findAll()).thenReturn(transactionList);
 

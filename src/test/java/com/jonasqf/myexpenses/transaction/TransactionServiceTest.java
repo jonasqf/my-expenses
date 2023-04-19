@@ -33,7 +33,8 @@ class TransactionServiceTest {
         underTest = new TransactionService(transactionRepository);
         transaction = new Transaction("Test Description",
                 "BILL", 1, new BigDecimal("200.0"),
-                new BigDecimal("200.0"));
+                new BigDecimal("200.0"),
+                UUID.randomUUID());
     }
 
     @Test
@@ -66,13 +67,16 @@ class TransactionServiceTest {
         List<Transaction> transactions = new ArrayList();
         transactions.add(new Transaction("Test Description 1",
                 "BILL", 1, new BigDecimal("100.0"),
-                new BigDecimal("200.0")));
+                new BigDecimal("200.0"),
+                UUID.randomUUID()));
         transactions.add(new Transaction("Test Description 2",
                 "BILL", 1, new BigDecimal("300.0"),
-                new BigDecimal("200.0")));
+                new BigDecimal("200.0"),
+                UUID.randomUUID()));
         transactions.add(new Transaction("Test Description 1",
                 "BILL", 1, new BigDecimal("50.0"),
-                new BigDecimal("50.0")));
+                new BigDecimal("50.0"),
+                UUID.randomUUID()));
 
         //when
         given(transactionRepository.findAll()).willReturn(transactions);

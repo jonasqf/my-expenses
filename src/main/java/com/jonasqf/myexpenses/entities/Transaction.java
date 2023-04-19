@@ -40,12 +40,16 @@ public class Transaction {
     @Column(name="balance")
     private BigDecimal balance;
 
-    public Transaction(String description, String category, int numberPayment, BigDecimal totalAmount, BigDecimal downPayment) {
+    @Column(name="commitment_id")
+    private UUID commitmentId;
+
+    public Transaction(String description, String category, int numberPayment, BigDecimal totalAmount, BigDecimal downPayment, UUID commitmentId) {
         this.description = description;
         this.category = category;
         this.numberPayment = numberPayment;
         this.totalAmount = totalAmount;
         this.downPayment = downPayment;
+        this.commitmentId = commitmentId;
     }
 
 }
