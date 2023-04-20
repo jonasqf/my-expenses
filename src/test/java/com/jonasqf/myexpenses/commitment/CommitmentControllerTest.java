@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +59,8 @@ class CommitmentControllerTest {
                 BigDecimal.valueOf(4300.00),
                 BigDecimal.valueOf(0.00),
                 12,
-                accountId
+                accountId,
+                LocalDate.of(2023, 4, 15).atStartOfDay()
         );
         commitment.setId(UUID.randomUUID());
     }
@@ -85,7 +87,8 @@ class CommitmentControllerTest {
                 BigDecimal.valueOf(500.00),
                 BigDecimal.valueOf(0.00),
                 12,
-                UUID.randomUUID()
+                UUID.randomUUID(),
+                LocalDate.of(2023, 4, 15).atStartOfDay()
         ));
         commitmentList.add(new Commitment("CREATED",
                 "BILL",
@@ -93,7 +96,8 @@ class CommitmentControllerTest {
                 BigDecimal.valueOf(1000.00),
                 BigDecimal.valueOf(0.00),
                 12,
-                UUID.randomUUID()
+                UUID.randomUUID(),
+                LocalDate.of(2023, 5, 15).atStartOfDay()
         ));
 
         when(commitmentService.findAll()).thenReturn(commitmentList);

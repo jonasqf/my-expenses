@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -14,7 +15,6 @@ import java.util.UUID;
 @Setter
 @Table(name="commitment")
 public class Commitment {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -31,13 +31,20 @@ public class Commitment {
     @Column(name="account_id")
     private UUID accountId;
 
+    @Column(name="created_at")
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(name="due_date")
+    private LocalDateTime dueDate;
+
     public Commitment(String status,
                       String type,
                       String description,
                       BigDecimal amount,
                       BigDecimal downPayment,
                       int numberInstallments,
-                      UUID accountId) {
+                      UUID accountId,
+                      LocalDateTime dueDate) {
         this.status = status;
         this.type = type;
         this.description = description;
@@ -45,5 +52,6 @@ public class Commitment {
         this.downPayment = downPayment;
         this.numberInstallments = numberInstallments;
         this.accountId = accountId;
+        this.dueDate = dueDate;
     }
 }

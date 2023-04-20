@@ -27,19 +27,26 @@ public class CommitmentService {
         BigDecimal nrPaymentsBD = BigDecimal.valueOf(commitment.getNumberInstallments());
         BigDecimal installmentAmount = commitment.getBalance().divide(nrPaymentsBD);
 
-        Commitment commitmentSaved = commitmentRepository.save(commitment);
-        UUID commitmentId = commitmentSaved.getId();
+        Commitment commitmentSaved;
+        UUID commitmentId;
+        try {
+            commitmentSaved = commitmentRepository.save(commitment);
+            commitmentId = commitmentSaved.getId();
 
-        for (int i=0;i<commitment.getNumberInstallments();i++){
-            Transaction transaction = new Transaction(commitment.getDescription(),
-                    commitment.getType(),
-                    i+1,
-                    installmentAmount,
-                    BigDecimal.ZERO,
-                    commitmentId);
-            transactionService.register(transaction);
+            for (int i = 0; i < commitment.getNumberInstallments(); i++) {
 
-        }
+                Transaction transaction = new Transaction(commitment.getDescription(),
+                        commitment.getType(),
+                        i + 1,
+                        installmentAmount,
+                        BigDecimal.ZERO,
+                        commitmentId);
+                transactionService.register(transaction);
+
+            }
+        } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
         return commitmentSaved;
     }
 
