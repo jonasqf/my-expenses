@@ -1,9 +1,5 @@
 package com.jonasqf.myexpenses.owner;
 
-import com.jonasqf.myexpenses.entities.Owner;
-import com.jonasqf.myexpenses.repositories.OwnerRepository;
-import com.jonasqf.myexpenses.services.OwnerService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

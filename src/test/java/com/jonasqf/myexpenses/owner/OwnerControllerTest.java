@@ -1,9 +1,6 @@
 package com.jonasqf.myexpenses.owner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jonasqf.myexpenses.controllers.OwnerController;
-import com.jonasqf.myexpenses.entities.Owner;
-import com.jonasqf.myexpenses.services.OwnerService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

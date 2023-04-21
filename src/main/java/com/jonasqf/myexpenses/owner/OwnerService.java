@@ -1,7 +1,7 @@
-package com.jonasqf.myexpenses.services;
+package com.jonasqf.myexpenses.owner;
 
-import com.jonasqf.myexpenses.entities.Owner;
-import com.jonasqf.myexpenses.repositories.OwnerRepository;
+import com.jonasqf.myexpenses.owner.Owner;
+import com.jonasqf.myexpenses.owner.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.jonasqf.myexpenses.entities;
+package com.jonasqf.myexpenses.owner;
 
 
 import jakarta.persistence.*;

@@ -2,7 +2,7 @@ package com.jonasqf.myexpenses.commitment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jonasqf.myexpenses.controllers.CommitmentController;
-import com.jonasqf.myexpenses.Account.Account;
+import com.jonasqf.myexpenses.account.Account;
 import com.jonasqf.myexpenses.entities.Commitment;
 import com.jonasqf.myexpenses.services.CommitmentService;
 import org.hamcrest.CoreMatchers;

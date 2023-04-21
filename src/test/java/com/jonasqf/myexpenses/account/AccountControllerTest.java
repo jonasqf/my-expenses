@@ -1,10 +1,7 @@
 package com.jonasqf.myexpenses.account;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jonasqf.myexpenses.Account.AccountController;
-import com.jonasqf.myexpenses.Account.Account;
-import com.jonasqf.myexpenses.entities.Owner;
-import com.jonasqf.myexpenses.Account.AccountService;
+import com.jonasqf.myexpenses.owner.Owner;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

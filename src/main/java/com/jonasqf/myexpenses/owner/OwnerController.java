@@ -1,7 +1,5 @@
-package com.jonasqf.myexpenses.controllers;
+package com.jonasqf.myexpenses.owner;
 
-import com.jonasqf.myexpenses.entities.Owner;
-import com.jonasqf.myexpenses.services.OwnerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
