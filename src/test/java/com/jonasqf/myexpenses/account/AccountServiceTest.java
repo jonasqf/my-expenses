@@ -1,8 +1,8 @@
 package com.jonasqf.myexpenses.account;
 
-import com.jonasqf.myexpenses.entities.Account;
-import com.jonasqf.myexpenses.repositories.AccountRepository;
-import com.jonasqf.myexpenses.services.AccountService;
+import com.jonasqf.myexpenses.Account.Account;
+import com.jonasqf.myexpenses.Account.AccountRepository;
+import com.jonasqf.myexpenses.Account.AccountService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

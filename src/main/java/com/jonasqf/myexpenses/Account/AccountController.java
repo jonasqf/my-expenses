@@ -1,7 +1,5 @@
-package com.jonasqf.myexpenses.controllers;
+package com.jonasqf.myexpenses.Account;
 
-import com.jonasqf.myexpenses.entities.Account;
-import com.jonasqf.myexpenses.services.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
