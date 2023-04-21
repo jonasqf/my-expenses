@@ -5,6 +5,7 @@ import com.jonasqf.myexpenses.transaction.TransactionService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,8 +25,7 @@ public class CommitmentService {
         //balance should always be the result of amount - down Payment
         commitment.setBalance(commitment.getAmount().subtract(commitment.getDownPayment()));
         BigDecimal nrPaymentsBD = BigDecimal.valueOf(commitment.getNumberInstallments());
-        BigDecimal installmentAmount = commitment.getBalance().divide(nrPaymentsBD);
-        //String dueDate = commitment.getDueDate().toString();
+        BigDecimal installmentAmount = commitment.getBalance().divide(nrPaymentsBD).round(new MathContext(2));
 
         Commitment commitmentSaved;
         UUID commitmentId;
