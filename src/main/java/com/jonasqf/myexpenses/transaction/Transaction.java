@@ -1,4 +1,4 @@
-package com.jonasqf.myexpenses.entities;
+package com.jonasqf.myexpenses.transaction;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;

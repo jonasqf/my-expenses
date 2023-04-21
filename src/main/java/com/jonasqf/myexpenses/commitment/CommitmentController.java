@@ -1,7 +1,5 @@
-package com.jonasqf.myexpenses.controllers;
+package com.jonasqf.myexpenses.commitment;
 
-import com.jonasqf.myexpenses.entities.Commitment;
-import com.jonasqf.myexpenses.services.CommitmentService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

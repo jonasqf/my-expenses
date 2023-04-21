@@ -1,10 +1,7 @@
 package com.jonasqf.myexpenses.commitment;
 
-import com.jonasqf.myexpenses.entities.Commitment;
-import com.jonasqf.myexpenses.entities.Transaction;
-import com.jonasqf.myexpenses.repositories.CommitmentRepository;
-import com.jonasqf.myexpenses.services.CommitmentService;
-import com.jonasqf.myexpenses.services.TransactionService;
+import com.jonasqf.myexpenses.transaction.Transaction;
+import com.jonasqf.myexpenses.transaction.TransactionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,8 +41,8 @@ class CommitmentServiceTest {
     @BeforeEach
     void setUp() {
         underTest = new CommitmentService(commitmentRepository, transactionService);
-        commitment = new Commitment("CREATED",
-                "INCOME",
+        commitment = new Commitment(CommitmentStatus.CREATED,
+                CommitmentType.INCOME,
                 "Monthly biweekly salary",
                 BigDecimal.valueOf(4300.00),
                 BigDecimal.valueOf(0.00),

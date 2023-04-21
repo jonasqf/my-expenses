@@ -1,10 +1,7 @@
 package com.jonasqf.myexpenses.commitment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jonasqf.myexpenses.controllers.CommitmentController;
 import com.jonasqf.myexpenses.account.Account;
-import com.jonasqf.myexpenses.entities.Commitment;
-import com.jonasqf.myexpenses.services.CommitmentService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,8 +50,8 @@ class CommitmentControllerTest {
         account = new Account(BigDecimal.ZERO, UUID.randomUUID());
         account.setId(accountId);
 
-        commitment = new Commitment("CREATED",
-                "INCOME",
+        commitment = new Commitment(CommitmentStatus.CREATED,
+                CommitmentType.INCOME,
                 "Monthly biweekly salary",
                 BigDecimal.valueOf(4300.00),
                 BigDecimal.valueOf(0.00),
@@ -81,8 +78,8 @@ class CommitmentControllerTest {
     @Test
     void getAllCommitments() throws Exception {
         List<Commitment> commitmentList = new ArrayList();
-        commitmentList.add(new Commitment("CREATED",
-                "INCOME",
+        commitmentList.add(new Commitment(CommitmentStatus.CREATED,
+                CommitmentType.INCOME,
                 "Monthly biweekly salary",
                 BigDecimal.valueOf(500.00),
                 BigDecimal.valueOf(0.00),
@@ -90,8 +87,8 @@ class CommitmentControllerTest {
                 UUID.randomUUID(),
                 LocalDate.of(2023, 4, 15)
         ));
-        commitmentList.add(new Commitment("CREATED",
-                "BILL",
+        commitmentList.add(new Commitment(CommitmentStatus.CREATED,
+                CommitmentType.INCOME,
                 "Monthly biweekly salary",
                 BigDecimal.valueOf(1000.00),
                 BigDecimal.valueOf(0.00),
@@ -159,7 +156,7 @@ class CommitmentControllerTest {
 
     @Test
     void updateCommitment() throws Exception {
-        commitment.setStatus("CANCELLED");
+        commitment.setStatus(CommitmentStatus.CANCELLED);
 
         doNothing().when(commitmentService).update(commitment);
 
@@ -168,6 +165,6 @@ class CommitmentControllerTest {
                 .content(objectMapper.writeValueAsString(commitment)));
         response.andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.status"
-                        , CoreMatchers.is(commitment.getStatus())));
+                        , CoreMatchers.is(commitment.getStatus().toString())));
     }
 }

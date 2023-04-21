@@ -1,6 +1,6 @@
-package com.jonasqf.myexpenses.repositories;
+package com.jonasqf.myexpenses.commitment;
 
-import com.jonasqf.myexpenses.entities.Commitment;
+import com.jonasqf.myexpenses.commitment.Commitment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

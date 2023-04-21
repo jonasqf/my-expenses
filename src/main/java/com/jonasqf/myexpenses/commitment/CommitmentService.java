@@ -1,8 +1,7 @@
-package com.jonasqf.myexpenses.services;
+package com.jonasqf.myexpenses.commitment;
 
-import com.jonasqf.myexpenses.entities.Commitment;
-import com.jonasqf.myexpenses.entities.Transaction;
-import com.jonasqf.myexpenses.repositories.CommitmentRepository;
+import com.jonasqf.myexpenses.transaction.Transaction;
+import com.jonasqf.myexpenses.transaction.TransactionService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -36,7 +35,7 @@ public class CommitmentService {
 
             for (int i = 0; i < commitment.getNumberInstallments(); i++) {
                 Transaction transaction = new Transaction(commitment.getDescription(),
-                        commitment.getType(),
+                        commitment.getType().toString(),
                         i + 1,
                         installmentAmount,
                         BigDecimal.ZERO,

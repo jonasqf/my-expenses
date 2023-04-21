@@ -1,8 +1,5 @@
 package com.jonasqf.myexpenses.transaction;
 
-import com.jonasqf.myexpenses.entities.Transaction;
-import com.jonasqf.myexpenses.repositories.TransactionRepository;
-import com.jonasqf.myexpenses.services.TransactionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

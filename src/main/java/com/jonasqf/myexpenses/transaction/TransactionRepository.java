@@ -1,6 +1,6 @@
-package com.jonasqf.myexpenses.repositories;
+package com.jonasqf.myexpenses.transaction;
 
-import com.jonasqf.myexpenses.entities.Transaction;
+import com.jonasqf.myexpenses.transaction.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

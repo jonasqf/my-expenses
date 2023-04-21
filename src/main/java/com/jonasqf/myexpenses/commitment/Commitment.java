@@ -1,4 +1,4 @@
-package com.jonasqf.myexpenses.entities;
+package com.jonasqf.myexpenses.commitment;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -22,8 +22,8 @@ public class Commitment {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String status;
-    private String type;
+    private CommitmentStatus status;
+    private CommitmentType type;
     private String description;
     private BigDecimal balance;
     private BigDecimal amount;
@@ -42,8 +42,8 @@ public class Commitment {
     @Column(name="due_date")
     private LocalDate dueDate;
 
-    public Commitment(String status,
-                      String type,
+    public Commitment(CommitmentStatus status,
+                      CommitmentType type,
                       String description,
                       BigDecimal amount,
                       BigDecimal downPayment,

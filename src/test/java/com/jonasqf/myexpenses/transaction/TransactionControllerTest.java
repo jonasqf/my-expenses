@@ -1,9 +1,6 @@
 package com.jonasqf.myexpenses.transaction;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jonasqf.myexpenses.controllers.TransactionController;
-import com.jonasqf.myexpenses.entities.Transaction;
-import com.jonasqf.myexpenses.services.TransactionService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
