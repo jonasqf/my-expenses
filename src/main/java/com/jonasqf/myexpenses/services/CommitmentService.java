@@ -22,10 +22,11 @@ public class CommitmentService {
         this.transactionService = transactionService;
     }
     public Commitment register(Commitment commitment) {
-        //balance should always be the result of amount - downPayment
+        //balance should always be the result of amount - down Payment
         commitment.setBalance(commitment.getAmount().subtract(commitment.getDownPayment()));
         BigDecimal nrPaymentsBD = BigDecimal.valueOf(commitment.getNumberInstallments());
         BigDecimal installmentAmount = commitment.getBalance().divide(nrPaymentsBD);
+        //String dueDate = commitment.getDueDate().toString();
 
         Commitment commitmentSaved;
         UUID commitmentId;
@@ -34,13 +35,13 @@ public class CommitmentService {
             commitmentId = commitmentSaved.getId();
 
             for (int i = 0; i < commitment.getNumberInstallments(); i++) {
-
                 Transaction transaction = new Transaction(commitment.getDescription(),
                         commitment.getType(),
                         i + 1,
                         installmentAmount,
                         BigDecimal.ZERO,
-                        commitmentId);
+                        commitmentId,
+                        commitment.getDueDate().plusMonths(i+1));
                 transactionService.register(transaction);
 
             }

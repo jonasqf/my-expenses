@@ -51,7 +51,7 @@ class CommitmentServiceTest {
                 BigDecimal.valueOf(0.00),
                 2,
                 UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15).atStartOfDay()
+                LocalDate.of(2023, 4, 15)
                 );
         commitment.setId(commitmentId);
     }
@@ -81,9 +81,11 @@ class CommitmentServiceTest {
         when(commitmentRepository.save(any())).thenReturn(commitment);
         List<Transaction> transactionList = new ArrayList();
         Transaction transaction1 = new Transaction("Monthly biweekly salary","BILL",
-                1, new BigDecimal("2150.0"), new BigDecimal("200.0"), UUID.randomUUID());
+                1, new BigDecimal("2150.0"), new BigDecimal("200.0"), UUID.randomUUID(),
+                LocalDate.of(2023, 4, 15));
         Transaction transaction2 = new Transaction("Monthly biweekly salary","BILL",
-                1, new BigDecimal("2150.0"), new BigDecimal("200.0"), UUID.randomUUID());
+                1, new BigDecimal("2150.0"), new BigDecimal("200.0"), UUID.randomUUID(),
+                LocalDate.of(2023, 4, 15));
         transaction1.setCommitmentId(commitmentId);
         transaction2.setCommitmentId(commitmentId);
         transactionList.add(transaction1);

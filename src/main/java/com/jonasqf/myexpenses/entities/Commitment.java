@@ -1,9 +1,12 @@
 package com.jonasqf.myexpenses.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -34,8 +37,10 @@ public class Commitment {
     @Column(name="created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name="due_date")
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
 
     public Commitment(String status,
                       String type,
@@ -44,7 +49,7 @@ public class Commitment {
                       BigDecimal downPayment,
                       int numberInstallments,
                       UUID accountId,
-                      LocalDateTime dueDate) {
+                      LocalDate dueDate) {
         this.status = status;
         this.type = type;
         this.description = description;

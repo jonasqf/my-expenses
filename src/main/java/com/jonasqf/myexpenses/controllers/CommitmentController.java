@@ -2,6 +2,7 @@ package com.jonasqf.myexpenses.controllers;
 
 import com.jonasqf.myexpenses.entities.Commitment;
 import com.jonasqf.myexpenses.services.CommitmentService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,9 @@ public class CommitmentController {
     }
 
     @PostMapping
-    public ResponseEntity<Commitment> register(@RequestBody Commitment commitment) {
+    public ResponseEntity<Commitment> register(@RequestBody
+                                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                                                   Commitment commitment) {
 
         Commitment commitment1 = commitmentService.register(commitment);
         return new ResponseEntity<>(commitment1, HttpStatus.CREATED);

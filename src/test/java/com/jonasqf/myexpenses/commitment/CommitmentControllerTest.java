@@ -2,7 +2,7 @@ package com.jonasqf.myexpenses.commitment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jonasqf.myexpenses.controllers.CommitmentController;
-import com.jonasqf.myexpenses.entities.Account;
+import com.jonasqf.myexpenses.Account.Account;
 import com.jonasqf.myexpenses.entities.Commitment;
 import com.jonasqf.myexpenses.services.CommitmentService;
 import org.hamcrest.CoreMatchers;
@@ -60,7 +60,7 @@ class CommitmentControllerTest {
                 BigDecimal.valueOf(0.00),
                 12,
                 accountId,
-                LocalDate.of(2023, 4, 15).atStartOfDay()
+                LocalDate.of(2023, 4, 15)
         );
         commitment.setId(UUID.randomUUID());
     }
@@ -88,7 +88,7 @@ class CommitmentControllerTest {
                 BigDecimal.valueOf(0.00),
                 12,
                 UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15).atStartOfDay()
+                LocalDate.of(2023, 4, 15)
         ));
         commitmentList.add(new Commitment("CREATED",
                 "BILL",
@@ -97,7 +97,7 @@ class CommitmentControllerTest {
                 BigDecimal.valueOf(0.00),
                 12,
                 UUID.randomUUID(),
-                LocalDate.of(2023, 5, 15).atStartOfDay()
+                LocalDate.of(2023, 5, 15)
         ));
 
         when(commitmentService.findAll()).thenReturn(commitmentList);

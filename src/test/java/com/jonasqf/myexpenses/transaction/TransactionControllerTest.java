@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -52,7 +53,8 @@ class TransactionControllerTest {
         transaction = new Transaction("Test Description",
                 "BILL", 1, new BigDecimal("200.0"),
                 new BigDecimal("200.0"),
-                UUID.randomUUID());
+                UUID.randomUUID(),
+                LocalDate.of(2023, 4, 15));
         transaction.setId(id);
     }
 
@@ -77,15 +79,18 @@ class TransactionControllerTest {
         transactionList.add(new Transaction("Test Description 1",
                 "BILL", 1, new BigDecimal("200.0"),
                 new BigDecimal("200.0"),
-                UUID.randomUUID()));
+                UUID.randomUUID(),
+                LocalDate.of(2023, 4, 15)));
         transactionList.add(new Transaction("Test Description 2",
                 "BILL", 1, new BigDecimal("200.0"),
                 new BigDecimal("200.0"),
-                UUID.randomUUID()));
+                UUID.randomUUID(),
+                LocalDate.of(2023, 4, 15)));
         transactionList.add(new Transaction("Test Description 3",
                 "BILL", 1, new BigDecimal("200.0"),
                 new BigDecimal("200.0"),
-                UUID.randomUUID()));
+                UUID.randomUUID(),
+                LocalDate.of(2023, 4, 15)));
 
         when(transactionService.findAll()).thenReturn(transactionList);
 

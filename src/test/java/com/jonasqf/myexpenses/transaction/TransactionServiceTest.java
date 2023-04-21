@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -34,7 +35,8 @@ class TransactionServiceTest {
         transaction = new Transaction("Test Description",
                 "BILL", 1, new BigDecimal("200.0"),
                 new BigDecimal("200.0"),
-                UUID.randomUUID());
+                UUID.randomUUID(),
+                LocalDate.of(2023, 4, 15));
     }
 
     @Test
@@ -68,15 +70,18 @@ class TransactionServiceTest {
         transactions.add(new Transaction("Test Description 1",
                 "BILL", 1, new BigDecimal("100.0"),
                 new BigDecimal("200.0"),
-                UUID.randomUUID()));
+                UUID.randomUUID(),
+                LocalDate.of(2023, 4, 15)));
         transactions.add(new Transaction("Test Description 2",
                 "BILL", 1, new BigDecimal("300.0"),
                 new BigDecimal("200.0"),
-                UUID.randomUUID()));
+                UUID.randomUUID(),
+                LocalDate.of(2023, 4, 15)));
         transactions.add(new Transaction("Test Description 1",
                 "BILL", 1, new BigDecimal("50.0"),
                 new BigDecimal("50.0"),
-                UUID.randomUUID()));
+                UUID.randomUUID(),
+                LocalDate.of(2023, 4, 15)));
 
         //when
         given(transactionRepository.findAll()).willReturn(transactions);
