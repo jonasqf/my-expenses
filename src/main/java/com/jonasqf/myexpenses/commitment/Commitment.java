@@ -33,10 +33,8 @@ public class Commitment {
     private int numberInstallments;
     @Column(name="account_id")
     private UUID accountId;
-
     @Column(name="created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
-
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name="due_date")
