@@ -1,6 +1,5 @@
 package com.jonasqf.myexpenses.commitment;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,25 +11,19 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/commitments")
 public class CommitmentController {
-
     private final CommitmentService commitmentService;
-
     public CommitmentController(CommitmentService commitmentService) {
         this.commitmentService = commitmentService;
     }
 
     @PostMapping
-    public ResponseEntity<Commitment> register(@RequestBody
-                                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-                                                   Commitment commitment) {
-
+    public ResponseEntity<Commitment> register(@RequestBody Commitment commitment) {
         Commitment commitment1 = commitmentService.register(commitment);
         return new ResponseEntity<>(commitment1, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<Collection<Commitment>> findAll() {
-
         Collection<Commitment> findAll = commitmentService.findAll();
         return new ResponseEntity<>(findAll, HttpStatus.OK);
     }
