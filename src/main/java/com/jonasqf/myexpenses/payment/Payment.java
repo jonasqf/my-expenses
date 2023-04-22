@@ -1,4 +1,4 @@
-package com.jonasqf.myexpenses.transaction;
+package com.jonasqf.myexpenses.payment;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -15,12 +15,12 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name="transaction")
+@Table(name="payment")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Transaction {
+public class Payment {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -45,13 +45,15 @@ public class Transaction {
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name="due_date")
     private LocalDate dueDate;
-    public Transaction(String description,
-                       String category,
-                       int numberPayment,
-                       BigDecimal totalAmount,
-                       BigDecimal downPayment,
-                       UUID commitmentId,
-                       LocalDate dueDate) {
+    private PaymentStatus status;
+    public Payment(String description,
+                   String category,
+                   int numberPayment,
+                   BigDecimal totalAmount,
+                   BigDecimal downPayment,
+                   UUID commitmentId,
+                   LocalDate dueDate,
+                   PaymentStatus status) {
         this.description = description;
         this.category = category;
         this.numberPayment = numberPayment;
@@ -59,6 +61,7 @@ public class Transaction {
         this.downPayment = downPayment;
         this.commitmentId = commitmentId;
         this.dueDate = dueDate;
+        this.status = status;
     }
 
 }

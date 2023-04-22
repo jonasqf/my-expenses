@@ -1,4 +1,4 @@
-package com.jonasqf.myexpenses.transaction;
+package com.jonasqf.myexpenses.payment;
 
 import org.springframework.stereotype.Service;
 
@@ -8,27 +8,27 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class TransactionService {
-    private final TransactionRepository transactionRepository;
-    public TransactionService(TransactionRepository transactionRepository) {
+public class PaymentService {
+    private final PaymentRepository transactionRepository;
+    public PaymentService(PaymentRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
     }
-    public Transaction register(Transaction transaction) {
+    public Payment register(Payment transaction) {
         BigDecimal currentBalance;
         currentBalance = transaction.getTotalAmount().subtract(transaction.getDownPayment());
         transaction.setBalance(currentBalance);
         return transactionRepository.save(transaction);
     }
-    public Collection<Transaction> findAll() {
+    public Collection<Payment> findAll() {
         return transactionRepository.findAll();
     }
-    public void delete(Transaction transaction) {
+    public void delete(Payment transaction) {
         transactionRepository.delete(transaction);
     }
-    public Optional <Transaction> findById(UUID id) {
+    public Optional <Payment> findById(UUID id) {
         return transactionRepository.findById(id);
     }
-    public void update(Transaction transaction) {
+    public void update(Payment transaction) {
         transactionRepository.save(transaction);
     }
 }

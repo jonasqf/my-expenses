@@ -1,6 +1,7 @@
-package com.jonasqf.myexpenses.transaction;
+package com.jonasqf.myexpenses.payment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jonasqf.myexpenses.mocks.PaymentMockFactory;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,8 +18,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = TransactionController.class)
+@WebMvcTest(controllers = PaymentController.class)
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 class TransactionControllerTest {
@@ -39,19 +38,15 @@ class TransactionControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private TransactionService transactionService;
+    private PaymentService transactionService;
     @Autowired
     private ObjectMapper objectMapper;
-    private Transaction transaction;
+    private Payment transaction;
 
     final UUID id = UUID.fromString("f0d45730-b812-4b21-a7c1-22a574ebbdb4");
     @BeforeEach
     void setUp() {
-        transaction = new Transaction("Test Description",
-                "BILL", 1, new BigDecimal("200.0"),
-                new BigDecimal("200.0"),
-                UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15));
+        transaction = new PaymentMockFactory().createMockPayment();
         transaction.setId(id);
     }
 
@@ -72,22 +67,10 @@ class TransactionControllerTest {
 
     @Test
     void itShouldFindAll() throws Exception {
-        List<Transaction> transactionList = new ArrayList<>();
-        transactionList.add(new Transaction("Test Description 1",
-                "BILL", 1, new BigDecimal("200.0"),
-                new BigDecimal("200.0"),
-                UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15)));
-        transactionList.add(new Transaction("Test Description 2",
-                "BILL", 1, new BigDecimal("200.0"),
-                new BigDecimal("200.0"),
-                UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15)));
-        transactionList.add(new Transaction("Test Description 3",
-                "BILL", 1, new BigDecimal("200.0"),
-                new BigDecimal("200.0"),
-                UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15)));
+        List<Payment> transactionList = new ArrayList<>();
+        transactionList.add(new PaymentMockFactory().createMockPayment());
+        transactionList.add(new PaymentMockFactory().createMockPayment());
+        transactionList.add(new PaymentMockFactory().createMockPayment());
 
         when(transactionService.findAll()).thenReturn(transactionList);
 

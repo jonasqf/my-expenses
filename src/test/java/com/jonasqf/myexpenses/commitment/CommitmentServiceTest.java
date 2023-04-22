@@ -1,7 +1,8 @@
 package com.jonasqf.myexpenses.commitment;
 
-import com.jonasqf.myexpenses.transaction.Transaction;
-import com.jonasqf.myexpenses.transaction.TransactionService;
+import com.jonasqf.myexpenses.mocks.PaymentMockFactory;
+import com.jonasqf.myexpenses.payment.Payment;
+import com.jonasqf.myexpenses.payment.PaymentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +30,7 @@ class CommitmentServiceTest {
 
     private CommitmentService underTest;
     @Mock
-    private TransactionService transactionService;
+    private PaymentService transactionService;
 
     @Mock
     private CommitmentRepository commitmentRepository;
@@ -61,7 +62,7 @@ class CommitmentServiceTest {
     }
 
     @Test
-    void registerAccount_whenDownPaymentEqualsToAmount_thenBalanceShouldBeZero() {
+    void registerCommitment_whenDownPaymentEqualsToAmount_thenBalanceShouldBeZero() {
         //given
         when(commitmentRepository.save(any())).thenReturn(commitment);
         commitment.setDownPayment(BigDecimal.valueOf(4300.00));
@@ -73,16 +74,13 @@ class CommitmentServiceTest {
     }
 
     @Test
-    void registerAccount_thenItShouldCreateSameNumberOfTransactions() {
+    void registerCommitment_thenItShouldCreateSameNumberOfTransactions() {
         //given
         when(commitmentRepository.save(any())).thenReturn(commitment);
-        List<Transaction> transactionList = new ArrayList();
-        Transaction transaction1 = new Transaction("Monthly biweekly salary","BILL",
-                1, new BigDecimal("2150.0"), new BigDecimal("200.0"), UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15));
-        Transaction transaction2 = new Transaction("Monthly biweekly salary","BILL",
-                1, new BigDecimal("2150.0"), new BigDecimal("200.0"), UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15));
+        List<Payment> transactionList = new ArrayList();
+        Payment transaction1 = new PaymentMockFactory().createMockPayment();
+        Payment transaction2 = new PaymentMockFactory().createMockPayment();
+
         transaction1.setCommitmentId(commitmentId);
         transaction2.setCommitmentId(commitmentId);
         transactionList.add(transaction1);
@@ -90,7 +88,7 @@ class CommitmentServiceTest {
         when(transactionService.findAll()).thenReturn(transactionList);
         //when
         underTest.register(commitment);
-        Collection<Transaction> transactionResponse = transactionService.findAll();
+        Collection<Payment> transactionResponse = transactionService.findAll();
         //then
         assertNotNull(transactionResponse);
         assertIterableEquals(transactionResponse, transactionList);
@@ -122,7 +120,7 @@ class CommitmentServiceTest {
     }
 
     @Test
-    void updateAccount() {
+    void updateCommitment() {
         //when
         underTest.update(commitment);
         //then

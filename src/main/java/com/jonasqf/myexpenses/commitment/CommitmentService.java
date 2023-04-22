@@ -1,7 +1,8 @@
 package com.jonasqf.myexpenses.commitment;
 
-import com.jonasqf.myexpenses.transaction.Transaction;
-import com.jonasqf.myexpenses.transaction.TransactionService;
+import com.jonasqf.myexpenses.payment.Payment;
+import com.jonasqf.myexpenses.payment.PaymentService;
+import com.jonasqf.myexpenses.payment.PaymentStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,9 +15,9 @@ import java.util.UUID;
 public class CommitmentService {
 
     private final CommitmentRepository commitmentRepository;
-    private final TransactionService transactionService;
+    private final PaymentService transactionService;
     public CommitmentService(CommitmentRepository commitmentRepository,
-                             TransactionService transactionService) {
+                             PaymentService transactionService) {
 
         this.commitmentRepository = commitmentRepository;
         this.transactionService = transactionService;
@@ -34,13 +35,14 @@ public class CommitmentService {
             commitmentId = commitmentSaved.getId();
 
             for (int i = 0; i < commitment.getNumberInstallments(); i++) {
-                Transaction transaction = new Transaction(commitment.getDescription(),
+                Payment transaction = new Payment(commitment.getDescription(),
                         commitment.getType().toString(),
                         i + 1,
                         installmentAmount,
                         BigDecimal.ZERO,
                         commitmentId,
-                        commitment.getDueDate().plusMonths(i+1));
+                        commitment.getDueDate().plusMonths(i+1),
+                        PaymentStatus.CREATED);
                 transactionService.register(transaction);
 
             }

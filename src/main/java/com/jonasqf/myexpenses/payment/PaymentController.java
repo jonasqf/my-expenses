@@ -1,4 +1,4 @@
-package com.jonasqf.myexpenses.transaction;
+package com.jonasqf.myexpenses.payment;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,31 +10,31 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/transactions")
-public class TransactionController {
+public class PaymentController {
 
-    private final TransactionService transactionService;
+    private final PaymentService transactionService;
 
-    public TransactionController(TransactionService transactionService) {
+    public PaymentController(PaymentService transactionService) {
         this.transactionService = transactionService;
     }
 
    @PostMapping
-    public ResponseEntity<Transaction> register(@RequestBody Transaction transaction) {
+    public ResponseEntity<Payment> register(@RequestBody Payment transaction) {
 
-        Transaction newTransaction = transactionService.register(transaction);
+        Payment newTransaction = transactionService.register(transaction);
         return new ResponseEntity<>(newTransaction, HttpStatus.CREATED);
     }
 
    @GetMapping
-    public ResponseEntity<Collection<Transaction>> findAll() {
+    public ResponseEntity<Collection<Payment>> findAll() {
 
-        Collection<Transaction> findAll = transactionService.findAll();
+        Collection<Payment> findAll = transactionService.findAll();
         return new ResponseEntity<>(findAll, HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Transaction> findById(@PathVariable UUID id){
-        Optional<Transaction> findById = transactionService.findById(id);
+    public ResponseEntity<Payment> findById(@PathVariable UUID id){
+        Optional<Payment> findById = transactionService.findById(id);
         if (findById.isPresent()) {
             return new ResponseEntity<>(findById.get(), HttpStatus.OK);
         } else {
@@ -43,8 +43,8 @@ public class TransactionController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Transaction> delete(@PathVariable UUID id) {
-        Optional<Transaction> deleted = transactionService.findById(id);
+    public ResponseEntity<Payment> delete(@PathVariable UUID id) {
+        Optional<Payment> deleted = transactionService.findById(id);
         if (deleted.isPresent()) {
             transactionService.delete(deleted.get());
             return new ResponseEntity<>(deleted.get(), HttpStatus.OK);
@@ -53,7 +53,7 @@ public class TransactionController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<Transaction> update(@RequestBody Transaction transaction) {
+    public ResponseEntity<Payment> update(@RequestBody Payment transaction) {
 
         transactionService.update(transaction);
         return new ResponseEntity<>(transaction, HttpStatus.OK);
