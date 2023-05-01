@@ -1,7 +1,6 @@
 package com.jonasqf.myexpenses.payment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jonasqf.myexpenses.mocks.PaymentMockFactory;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

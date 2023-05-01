@@ -4,7 +4,6 @@ import com.jonasqf.myexpenses.commitment.Commitment;
 import com.jonasqf.myexpenses.commitment.CommitmentRepository;
 import com.jonasqf.myexpenses.commitment.CommitmentStatus;
 import com.jonasqf.myexpenses.commitment.CommitmentType;
-import com.jonasqf.myexpenses.mocks.PaymentMockFactory;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

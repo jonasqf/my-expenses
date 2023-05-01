@@ -1,4 +1,4 @@
-package com.jonasqf.myexpenses.mocks;
+package com.jonasqf.myexpenses.payment;
 
 import com.jonasqf.myexpenses.payment.Payment;
 import com.jonasqf.myexpenses.payment.PaymentStatus;

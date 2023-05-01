@@ -1,6 +1,6 @@
 package com.jonasqf.myexpenses.commitment;
 
-import com.jonasqf.myexpenses.mocks.PaymentMockFactory;
+import com.jonasqf.myexpenses.payment.PaymentMockFactory;
 import com.jonasqf.myexpenses.payment.Payment;
 import com.jonasqf.myexpenses.payment.PaymentService;
 import org.junit.jupiter.api.BeforeEach;
