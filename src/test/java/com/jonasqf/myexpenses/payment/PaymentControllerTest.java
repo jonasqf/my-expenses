@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = PaymentController.class)
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
-class TransactionControllerTest {
+class PaymentControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

@@ -63,5 +63,4 @@ public class Payment {
         this.dueDate = dueDate;
         this.status = status;
     }
-
 }

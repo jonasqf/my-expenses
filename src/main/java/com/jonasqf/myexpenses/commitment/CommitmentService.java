@@ -24,7 +24,7 @@ public class CommitmentService {
     }
     public Commitment register(Commitment commitment) {
         //balance should always be the result of amount - down Payment
-        commitment.setBalance(commitment.getAmount().subtract(commitment.getDownPayment()));
+        commitment.setBalance(updateBalance(commitment));
         BigDecimal nrPaymentsBD = BigDecimal.valueOf(commitment.getNumberInstallments());
         BigDecimal installmentAmount = commitment.getBalance().divide(nrPaymentsBD).round(new MathContext(2));
 
@@ -44,30 +44,27 @@ public class CommitmentService {
                         commitment.getDueDate().plusMonths(i+1),
                         PaymentStatus.CREATED);
                 transactionService.register(transaction);
-
             }
         } catch (Exception e) {
         throw new RuntimeException(e);
     }
         return commitmentSaved;
     }
-
     public Collection<Commitment> findAll() {
         return commitmentRepository.findAll();
     }
-
-
     public void delete(Commitment commitment) {
-
         commitmentRepository.delete(commitment);
     }
-
     public Optional<Commitment> findById(UUID id) {
         return commitmentRepository.findById(id);
-
+    }
+    public void update(Commitment commitment) {
+        commitment.setBalance(updateBalance(commitment));
+        commitmentRepository.save(commitment);
     }
 
-    public void update(Commitment commitment) {
-        commitmentRepository.save(commitment);
+    public BigDecimal updateBalance(Commitment commitment) {
+        return (commitment.getAmount().subtract(commitment.getDownPayment()));
     }
 }
