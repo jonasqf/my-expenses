@@ -1,8 +1,5 @@
 package com.jonasqf.myexpenses.payment;
 
-import com.jonasqf.myexpenses.payment.Payment;
-import com.jonasqf.myexpenses.payment.PaymentStatus;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
