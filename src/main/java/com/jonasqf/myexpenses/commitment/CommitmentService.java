@@ -6,7 +6,6 @@ import com.jonasqf.myexpenses.payment.PaymentStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,8 +25,9 @@ public class CommitmentService {
         //balance should always be the result of amount - down Payment
         commitment.setBalance(updateBalance(commitment));
         BigDecimal nrPaymentsBD = BigDecimal.valueOf(commitment.getNumberInstallments());
-        BigDecimal installmentAmount = commitment.getBalance().divide(nrPaymentsBD).round(new MathContext(2));
-
+        float totalAmount = commitment.getAmount().floatValue();
+        totalAmount = totalAmount*commitment.getNumberInstallments();
+        commitment.setTotalAmount(BigDecimal.valueOf(totalAmount));
         Commitment commitmentSaved;
         UUID commitmentId;
         try {
@@ -38,11 +38,12 @@ public class CommitmentService {
                 Payment transaction = new Payment(commitment.getDescription(),
                         commitment.getType().toString(),
                         i + 1,
-                        installmentAmount,
+                        commitment.getAmount(),
                         BigDecimal.ZERO,
                         commitmentId,
                         commitment.getDueDate().plusMonths(i+1),
-                        PaymentStatus.CREATED);
+                        PaymentStatus.CREATED,
+                        commitment.getType());
                 transactionService.register(transaction);
             }
         } catch (Exception e) {

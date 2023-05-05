@@ -49,7 +49,8 @@ class CommitmentServiceTest {
                 BigDecimal.valueOf(0.00),
                 2,
                 UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15)
+                LocalDate.of(2023, 4, 15),
+                BigDecimal.valueOf(8600.00)
                 );
         commitment.setId(commitmentId);
     }

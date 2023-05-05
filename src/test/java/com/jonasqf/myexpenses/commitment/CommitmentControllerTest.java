@@ -57,7 +57,8 @@ class CommitmentControllerTest {
                 BigDecimal.valueOf(0.00),
                 12,
                 accountId,
-                LocalDate.of(2023, 4, 15)
+                LocalDate.of(2023, 4, 15),
+                BigDecimal.valueOf(51600.00)
         );
         commitment.setId(UUID.randomUUID());
     }
@@ -85,7 +86,8 @@ class CommitmentControllerTest {
                 BigDecimal.valueOf(0.00),
                 12,
                 UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15)
+                LocalDate.of(2023, 4, 15),
+                BigDecimal.valueOf(6000.00)
         ));
         commitmentList.add(new Commitment(CommitmentStatus.CREATED,
                 CommitmentType.INCOME,
@@ -94,7 +96,8 @@ class CommitmentControllerTest {
                 BigDecimal.valueOf(0.00),
                 12,
                 UUID.randomUUID(),
-                LocalDate.of(2023, 5, 15)
+                LocalDate.of(2023, 5, 15),
+                BigDecimal.valueOf(6000.00)
         ));
 
         when(commitmentService.findAll()).thenReturn(commitmentList);

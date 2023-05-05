@@ -113,7 +113,8 @@ class PaymentServiceTest {
                 BigDecimal.valueOf(0.00),
                 1,
                 UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15)
+                LocalDate.of(2023, 4, 15),
+                BigDecimal.valueOf(4300.00)
         );
         commitment.setId(UUID.randomUUID());
         //given
@@ -136,7 +137,8 @@ class PaymentServiceTest {
                 BigDecimal.valueOf(0.00),
                 2,
                 UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15)
+                LocalDate.of(2023, 4, 15),
+                BigDecimal.valueOf(8600.00)
         );
         commitment.setId(UUID.randomUUID());
         //given

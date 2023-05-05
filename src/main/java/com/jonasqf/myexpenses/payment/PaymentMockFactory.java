@@ -1,5 +1,7 @@
 package com.jonasqf.myexpenses.payment;
 
+import com.jonasqf.myexpenses.commitment.CommitmentType;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -12,7 +14,8 @@ public class PaymentMockFactory {
                 new BigDecimal("200.0"),
                 UUID.randomUUID(),
                 LocalDate.of(2023, 4, 15),
-                PaymentStatus.CREATED);
+                PaymentStatus.CREATED,
+                CommitmentType.WANTS);
     }
 
 }

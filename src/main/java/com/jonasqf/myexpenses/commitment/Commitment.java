@@ -27,6 +27,8 @@ public class Commitment {
     private String description;
     private BigDecimal balance;
     private BigDecimal amount;
+    @Column(name="total_amount")
+    private BigDecimal totalAmount;
     @Column(name="down_payment")
     private BigDecimal downPayment;
     @Column(name="number_installments")
@@ -47,7 +49,8 @@ public class Commitment {
                       BigDecimal downPayment,
                       int numberInstallments,
                       UUID accountId,
-                      LocalDate dueDate) {
+                      LocalDate dueDate,
+                      BigDecimal totalAmount) {
         this.status = status;
         this.type = type;
         this.description = description;
@@ -56,5 +59,6 @@ public class Commitment {
         this.numberInstallments = numberInstallments;
         this.accountId = accountId;
         this.dueDate = dueDate;
+        this.totalAmount = totalAmount;
     }
 }
