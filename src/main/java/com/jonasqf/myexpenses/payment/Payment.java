@@ -2,6 +2,7 @@ package com.jonasqf.myexpenses.payment;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jonasqf.myexpenses.commitment.Commitment;
 import com.jonasqf.myexpenses.commitment.CommitmentType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,12 +35,13 @@ public class Payment {
     private int numberPayment;
     @Column(name="total_amount")
     private BigDecimal totalAmount;
-    @Column(name="down_payment")
-    private BigDecimal downPayment;
+    @Column(name="amount_paid")
+    private BigDecimal amountPaid;
     @Column(name="balance")
     private BigDecimal balance;
-    @Column(name="commitment_id")
-    private UUID commitmentId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="commitment_id")
+    private Commitment commitment;
     @Column(name="payment_type")
     private CommitmentType paymentType;
     @Column(name="created_at")
@@ -53,8 +55,8 @@ public class Payment {
                    String category,
                    int numberPayment,
                    BigDecimal totalAmount,
-                   BigDecimal downPayment,
-                   UUID commitmentId,
+                   BigDecimal amountPaid,
+                   Commitment commitment,
                    LocalDate dueDate,
                    PaymentStatus status,
                    CommitmentType paymentType) {
@@ -62,8 +64,8 @@ public class Payment {
         this.category = category;
         this.numberPayment = numberPayment;
         this.totalAmount = totalAmount;
-        this.downPayment = downPayment;
-        this.commitmentId = commitmentId;
+        this.amountPaid = amountPaid;
+        this.commitment = commitment;
         this.dueDate = dueDate;
         this.status = status;
         this.paymentType = paymentType;

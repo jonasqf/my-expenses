@@ -1,7 +1,7 @@
 package com.jonasqf.myexpenses.commitment;
 
-import com.jonasqf.myexpenses.payment.PaymentMockFactory;
 import com.jonasqf.myexpenses.payment.Payment;
+import com.jonasqf.myexpenses.payment.PaymentMockFactory;
 import com.jonasqf.myexpenses.payment.PaymentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -42,16 +41,7 @@ class CommitmentServiceTest {
     @BeforeEach
     void setUp() {
         underTest = new CommitmentService(commitmentRepository, transactionService);
-        commitment = new Commitment(CommitmentStatus.CREATED,
-                CommitmentType.INCOME,
-                "Monthly biweekly salary",
-                BigDecimal.valueOf(4300.00),
-                BigDecimal.valueOf(0.00),
-                2,
-                UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15),
-                BigDecimal.valueOf(8600.00)
-                );
+        commitment = new CommitmentMockFactory().createMockCommitment();
         commitment.setId(commitmentId);
     }
 
@@ -66,12 +56,12 @@ class CommitmentServiceTest {
     void registerCommitment_whenDownPaymentEqualsToAmount_thenBalanceShouldBeZero() {
         //given
         when(commitmentRepository.save(any())).thenReturn(commitment);
-        commitment.setDownPayment(BigDecimal.valueOf(4300.00));
+        commitment.setDownPayment(BigDecimal.valueOf(8600.00));
         //when
         underTest.register(commitment);
         //then
         BigDecimal expected = BigDecimal.valueOf(0.00);
-        assertThat(expected, equalTo(commitment.getBalance()));
+        assertThat(commitment.getBalance(), equalTo(expected));
     }
 
     @Test
@@ -82,8 +72,8 @@ class CommitmentServiceTest {
         Payment transaction1 = new PaymentMockFactory().createMockPayment();
         Payment transaction2 = new PaymentMockFactory().createMockPayment();
 
-        transaction1.setCommitmentId(commitmentId);
-        transaction2.setCommitmentId(commitmentId);
+        transaction1.setCommitment(commitment);
+        transaction2.setCommitment(commitment);
         transactionList.add(transaction1);
         transactionList.add(transaction2);
         when(transactionService.findAll()).thenReturn(transactionList);

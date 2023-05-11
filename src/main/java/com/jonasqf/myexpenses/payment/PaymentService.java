@@ -18,11 +18,9 @@ public class PaymentService {
         this.paymentRepository = transactionRepository;
         this.commitmentRepository = commitmentRepository;
     }
-    public Payment register(Payment transaction) {
-        BigDecimal currentBalance;
-        currentBalance = transaction.getTotalAmount().subtract(transaction.getDownPayment());
-        transaction.setBalance(currentBalance);
-        return paymentRepository.save(transaction);
+    public Payment register(Payment payment) {
+        payment.setBalance(getPaymentBalance(payment));
+        return paymentRepository.save(payment);
     }
     public Collection<Payment> findAll() {
         return paymentRepository.findAll();
@@ -33,17 +31,27 @@ public class PaymentService {
     public Optional <Payment> findById(UUID id) {
         return paymentRepository.findById(id);
     }
-    public void update(Payment transaction) {
-        if (transaction.getCommitmentId() != null && transaction.getStatus().equals(PaymentStatus.DONE)) {
-        Optional<Commitment> commitment = commitmentRepository.findById(transaction.getCommitmentId());
-        if (commitment.isPresent()) {
-            if (commitment.get().getNumberInstallments() == transaction.getNumberPayment()) {
-                commitment.get().setStatus(CommitmentStatus.DONE);
+    public void update(Payment payment) {
+        payment.setBalance(getPaymentBalance(payment));
+        paymentRepository.save(payment);
+        updateCommitment(payment);
+    }
+    public BigDecimal getPaymentBalance(Payment payment) {
+       return payment.getAmountPaid().subtract(payment.getTotalAmount());
+    }
+    public void updateCommitment(Payment payment) {
+        if (payment.getCommitment() != null) {
+            Optional<Commitment> commitment = commitmentRepository.findById(payment.getCommitment().getId());
+            if (commitment.isPresent()) {
+                if (payment.getStatus().equals(PaymentStatus.DONE)) { // TODO unify both status
+                   commitment.get().setBalance(commitment.get().getBalance().add(payment.getAmountPaid()));
+                }
+                if (commitment.get().getNumberInstallments() == payment.getNumberPayment()) {
+                    commitment.get().setStatus(CommitmentStatus.DONE);
+                }
+                commitmentRepository.save(commitment.get());
             }
-            commitment.get().setDownPayment(transaction.getTotalAmount());
 
-            commitmentRepository.save(commitment.get());
         }
-        }
-        paymentRepository.save(transaction);}
+    }
 }

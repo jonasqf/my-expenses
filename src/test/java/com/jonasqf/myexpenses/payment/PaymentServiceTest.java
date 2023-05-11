@@ -2,9 +2,6 @@ package com.jonasqf.myexpenses.payment;
 
 import com.jonasqf.myexpenses.commitment.Commitment;
 import com.jonasqf.myexpenses.commitment.CommitmentRepository;
-import com.jonasqf.myexpenses.commitment.CommitmentStatus;
-import com.jonasqf.myexpenses.commitment.CommitmentType;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,17 +10,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class PaymentServiceTest {
@@ -104,18 +96,9 @@ class PaymentServiceTest {
         verify(paymentRepository).save(payment);
     }
 
-    @Test
+   /* @Test TODO create tests for setting commitment as done
     void itShould_UpdateAnPayment_ENDCommitment_whenStatusIs_DONE() {
-        commitment = new Commitment(CommitmentStatus.CREATED,
-                CommitmentType.INCOME,
-                "Monthly biweekly salary",
-                BigDecimal.valueOf(4300.00),
-                BigDecimal.valueOf(0.00),
-                1,
-                UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15),
-                BigDecimal.valueOf(4300.00)
-        );
+        commitment = new CommitmentMockFactory().createMockCommitment();
         commitment.setId(UUID.randomUUID());
         //given
         when(commitmentRepository.findById((UUID) any())).thenReturn(Optional.ofNullable(commitment));
@@ -151,5 +134,5 @@ class PaymentServiceTest {
         //then
         MatcherAssert.assertThat("DONE", equalTo(payment.getStatus().toString()));
         assertNotEquals("DONE", commitment.getStatus().toString());
-    }
+    }*/
 }

@@ -23,16 +23,11 @@ public class CommitmentService {
     }
     public Commitment register(Commitment commitment) {
         //balance should always be the result of amount - down Payment
-        commitment.setBalance(updateBalance(commitment));
-        BigDecimal nrPaymentsBD = BigDecimal.valueOf(commitment.getNumberInstallments());
-        float totalAmount = commitment.getAmount().floatValue();
-        totalAmount = totalAmount*commitment.getNumberInstallments();
-        commitment.setTotalAmount(BigDecimal.valueOf(totalAmount));
+        commitment.setTotalAmount(this.getTotalAmount(commitment));
+        commitment.setBalance(this.getBalance(commitment).multiply(BigDecimal.ONE.negate()));
         Commitment commitmentSaved;
-        UUID commitmentId;
         try {
             commitmentSaved = commitmentRepository.save(commitment);
-            commitmentId = commitmentSaved.getId();
 
             for (int i = 0; i < commitment.getNumberInstallments(); i++) {
                 Payment transaction = new Payment(commitment.getDescription(),
@@ -40,7 +35,7 @@ public class CommitmentService {
                         i + 1,
                         commitment.getAmount(),
                         BigDecimal.ZERO,
-                        commitmentId,
+                        commitment,
                         commitment.getDueDate().plusMonths(i+1),
                         PaymentStatus.CREATED,
                         commitment.getType());
@@ -61,11 +56,17 @@ public class CommitmentService {
         return commitmentRepository.findById(id);
     }
     public void update(Commitment commitment) {
-        commitment.setBalance(updateBalance(commitment));
+        commitment.setBalance(getBalance(commitment));
         commitmentRepository.save(commitment);
     }
 
-    public BigDecimal updateBalance(Commitment commitment) {
-        return (commitment.getAmount().subtract(commitment.getDownPayment()));
+    public BigDecimal getBalance(Commitment commitment) {
+        return (commitment.getTotalAmount().subtract(commitment.getDownPayment()));
+    }
+
+    public BigDecimal getTotalAmount(Commitment commitment) {
+        float totalAmount = commitment.getAmount().floatValue();
+        totalAmount = totalAmount*commitment.getNumberInstallments();
+        return BigDecimal.valueOf(totalAmount);
     }
 }
