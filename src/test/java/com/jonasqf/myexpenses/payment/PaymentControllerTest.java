@@ -41,6 +41,7 @@ class PaymentControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     private Payment transaction;
+    private String urlTemplate = "/api/v1/payments";
 
     final UUID id = UUID.fromString("f0d45730-b812-4b21-a7c1-22a574ebbdb4");
     @BeforeEach
@@ -54,7 +55,7 @@ class PaymentControllerTest {
         given(transactionService.register(ArgumentMatchers.any()))
                 .willAnswer((invocation -> invocation.getArgument(0)));
 
-        ResultActions response = mockMvc.perform(post("/api/v1/transactions")
+        ResultActions response = mockMvc.perform(post(urlTemplate)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(transaction)));
 
@@ -73,7 +74,7 @@ class PaymentControllerTest {
 
         when(transactionService.findAll()).thenReturn(transactionList);
 
-        ResultActions response = mockMvc.perform(get("/api/v1/transactions")
+        ResultActions response = mockMvc.perform(get(urlTemplate)
                 .contentType(MediaType.APPLICATION_JSON));
 
         response.andExpect(status().isOk())
@@ -88,7 +89,7 @@ class PaymentControllerTest {
 
         when(transactionService.findById(id)).thenReturn(Optional.ofNullable(transaction));
 
-        ResultActions response = mockMvc.perform(get("/api/v1/transactions/7ce4a601-3aa3-4d52-a437-3a931fe67c70")
+        ResultActions response = mockMvc.perform(get(urlTemplate+"/7ce4a601-3aa3-4d52-a437-3a931fe67c70")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(transaction)));
 
@@ -102,7 +103,7 @@ class PaymentControllerTest {
         when(transactionService.findById(transaction.getId())).thenReturn(Optional.of(transaction));
         doNothing().when(transactionService).delete(transaction);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/transactions/" + transaction.getId())
+        mockMvc.perform(MockMvcRequestBuilders.delete(urlTemplate + "/" + transaction.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -113,7 +114,8 @@ class PaymentControllerTest {
 
         doNothing().when(transactionService).update(transaction);
 
-        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/transactions/" + transaction.getId())
+        ResultActions response = mockMvc.perform(MockMvcRequestBuilders
+                .put(urlTemplate + "/" +transaction.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(transaction)));
 

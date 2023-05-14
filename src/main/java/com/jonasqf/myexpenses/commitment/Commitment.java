@@ -1,13 +1,15 @@
 package com.jonasqf.myexpenses.commitment;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jonasqf.myexpenses.payment.Payment;
 import jakarta.persistence.*;
 import lombok.*;
-import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -37,10 +39,12 @@ public class Commitment {
     private UUID accountId;
     @Column(name="created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
-    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
-    @Column(name="due_date")
+    @Column(name="due_date", nullable = false)
     private LocalDate dueDate;
+
+    @OneToMany(mappedBy="commitment")
+    private List<Payment> payments = new ArrayList<>();
 
     public Commitment(CommitmentStatus status,
                       CommitmentType type,

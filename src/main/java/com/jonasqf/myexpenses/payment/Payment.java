@@ -2,6 +2,7 @@ package com.jonasqf.myexpenses.payment;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jonasqf.myexpenses.commitment.Commitment;
 import com.jonasqf.myexpenses.commitment.CommitmentType;
 import jakarta.persistence.*;
@@ -9,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
@@ -41,6 +44,8 @@ public class Payment {
     private BigDecimal balance;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="commitment_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Commitment commitment;
     @Column(name="payment_type")
     private CommitmentType paymentType;
@@ -50,6 +55,7 @@ public class Payment {
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name="due_date")
     private LocalDate dueDate;
+    @Column(name = "status")
     private PaymentStatus status;
     public Payment(String description,
                    String category,

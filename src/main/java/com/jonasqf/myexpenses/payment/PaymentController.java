@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/v1/transactions")
+@RequestMapping("api/v1/payments")
 public class PaymentController {
 
     private final PaymentService transactionService;
