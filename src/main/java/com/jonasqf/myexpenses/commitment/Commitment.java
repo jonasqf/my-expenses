@@ -2,6 +2,7 @@ package com.jonasqf.myexpenses.commitment;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jonasqf.myexpenses.payment.Payment;
+import com.jonasqf.myexpenses.utils.FinancialStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,7 +25,7 @@ public class Commitment {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private CommitmentStatus status;
+    private FinancialStatus status;
     private CommitmentType type;
     private String description;
     private BigDecimal balance;
@@ -46,7 +47,7 @@ public class Commitment {
     @OneToMany(mappedBy="commitment")
     private List<Payment> payments = new ArrayList<>();
 
-    public Commitment(CommitmentStatus status,
+    public Commitment(FinancialStatus status,
                       CommitmentType type,
                       String description,
                       BigDecimal amount,

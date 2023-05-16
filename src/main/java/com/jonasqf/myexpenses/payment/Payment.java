@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jonasqf.myexpenses.commitment.Commitment;
 import com.jonasqf.myexpenses.commitment.CommitmentType;
+import com.jonasqf.myexpenses.utils.FinancialStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -55,12 +56,11 @@ public class Payment {
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name="due_date")
     private LocalDate dueDate;
-    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name="period")
     private LocalDate period;
     @Column(name = "status")
-    private PaymentStatus status;
+    private FinancialStatus status;
     public Payment(String description,
                    String category,
                    int numberPayment,
@@ -68,7 +68,7 @@ public class Payment {
                    BigDecimal amountPaid,
                    Commitment commitment,
                    LocalDate dueDate,
-                   PaymentStatus status,
+                   FinancialStatus status,
                    CommitmentType paymentType) {
         this.description = description;
         this.category = category;

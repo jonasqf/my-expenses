@@ -2,7 +2,7 @@ package com.jonasqf.myexpenses.commitment;
 
 import com.jonasqf.myexpenses.payment.Payment;
 import com.jonasqf.myexpenses.payment.PaymentService;
-import com.jonasqf.myexpenses.payment.PaymentStatus;
+import com.jonasqf.myexpenses.utils.FinancialStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -37,7 +37,7 @@ public class CommitmentService {
                         BigDecimal.ZERO,
                         commitment,
                         commitment.getDueDate().plusMonths(i+1),
-                        PaymentStatus.CREATED,
+                        FinancialStatus.CREATED,
                         commitment.getType());
                 transactionService.register(transaction);
             }

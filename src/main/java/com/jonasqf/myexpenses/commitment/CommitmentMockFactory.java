@@ -1,5 +1,7 @@
 package com.jonasqf.myexpenses.commitment;
 
+import com.jonasqf.myexpenses.utils.FinancialStatus;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -7,7 +9,7 @@ import java.util.UUID;
 public class CommitmentMockFactory {
 
     public Commitment createMockCommitment() {
-        return new Commitment(CommitmentStatus.CREATED,
+        return new Commitment(FinancialStatus.CREATED,
                 CommitmentType.INCOME,
                 "Monthly biweekly salary",
                 BigDecimal.valueOf(4300.00),

@@ -2,7 +2,7 @@ package com.jonasqf.myexpenses.payment;
 
 import com.jonasqf.myexpenses.commitment.Commitment;
 import com.jonasqf.myexpenses.commitment.CommitmentRepository;
-import com.jonasqf.myexpenses.commitment.CommitmentStatus;
+import com.jonasqf.myexpenses.utils.FinancialStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -47,11 +47,11 @@ public class PaymentService {
         if (payment.getCommitment() != null) {
             Optional<Commitment> commitment = commitmentRepository.findById(payment.getCommitment().getId());
             if (commitment.isPresent()) {
-                if (payment.getStatus().equals(PaymentStatus.DONE)) { // TODO unify both status
+                if (payment.getStatus().equals(FinancialStatus.DONE)) {
                    commitment.get().setBalance(commitment.get().getBalance().add(payment.getAmountPaid()));
                 }
                 if (commitment.get().getNumberInstallments() == payment.getNumberPayment()) {
-                    commitment.get().setStatus(CommitmentStatus.DONE);
+                    commitment.get().setStatus(FinancialStatus.DONE);
                 }
                 commitmentRepository.save(commitment.get());
             }
@@ -59,7 +59,7 @@ public class PaymentService {
         }
     }
     public Collection<Payment> findByPeriod(LocalDate period) {
-        System.out.println("period: "+ period);
         return paymentRepository.findByPeriod(period);
     }
+
 }

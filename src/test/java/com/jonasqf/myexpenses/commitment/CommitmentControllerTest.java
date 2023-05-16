@@ -2,6 +2,7 @@ package com.jonasqf.myexpenses.commitment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jonasqf.myexpenses.account.Account;
+import com.jonasqf.myexpenses.utils.FinancialStatus;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -50,16 +50,7 @@ class CommitmentControllerTest {
         account = new Account(BigDecimal.ZERO, UUID.randomUUID());
         account.setId(accountId);
 
-        commitment = new Commitment(CommitmentStatus.CREATED,
-                CommitmentType.INCOME,
-                "Monthly biweekly salary",
-                BigDecimal.valueOf(4300.00),
-                BigDecimal.valueOf(0.00),
-                12,
-                accountId,
-                LocalDate.of(2023, 4, 15),
-                BigDecimal.valueOf(51600.00)
-        );
+        commitment = new CommitmentMockFactory().createMockCommitment();
         commitment.setId(UUID.randomUUID());
     }
 
@@ -79,26 +70,8 @@ class CommitmentControllerTest {
     @Test
     void getAllCommitments() throws Exception {
         List<Commitment> commitmentList = new ArrayList();
-        commitmentList.add(new Commitment(CommitmentStatus.CREATED,
-                CommitmentType.INCOME,
-                "Monthly biweekly salary",
-                BigDecimal.valueOf(500.00),
-                BigDecimal.valueOf(0.00),
-                12,
-                UUID.randomUUID(),
-                LocalDate.of(2023, 4, 15),
-                BigDecimal.valueOf(6000.00)
-        ));
-        commitmentList.add(new Commitment(CommitmentStatus.CREATED,
-                CommitmentType.INCOME,
-                "Monthly biweekly salary",
-                BigDecimal.valueOf(1000.00),
-                BigDecimal.valueOf(0.00),
-                12,
-                UUID.randomUUID(),
-                LocalDate.of(2023, 5, 15),
-                BigDecimal.valueOf(6000.00)
-        ));
+        commitmentList.add(new CommitmentMockFactory().createMockCommitment());
+        commitmentList.add(new CommitmentMockFactory().createMockCommitment());
 
         when(commitmentService.findAll()).thenReturn(commitmentList);
 
@@ -159,7 +132,7 @@ class CommitmentControllerTest {
 
     @Test
     void updateCommitment() throws Exception {
-        commitment.setStatus(CommitmentStatus.CANCELLED);
+        commitment.setStatus(FinancialStatus.CANCELLED);
 
         doNothing().when(commitmentService).update(commitment);
 
