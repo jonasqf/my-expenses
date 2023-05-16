@@ -55,6 +55,10 @@ public class Payment {
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name="due_date")
     private LocalDate dueDate;
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    @Column(name="period")
+    private LocalDate period;
     @Column(name = "status")
     private PaymentStatus status;
     public Payment(String description,

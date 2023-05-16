@@ -6,9 +6,12 @@ import com.jonasqf.myexpenses.commitment.CommitmentStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
+
+import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 
 @Service
 public class PaymentService {
@@ -19,6 +22,7 @@ public class PaymentService {
         this.commitmentRepository = commitmentRepository;
     }
     public Payment register(Payment payment) {
+        payment.setPeriod(payment.getDueDate().with(lastDayOfMonth()));
         payment.setBalance(getPaymentBalance(payment));
         return paymentRepository.save(payment);
     }
@@ -53,5 +57,9 @@ public class PaymentService {
             }
 
         }
+    }
+    public Collection<Payment> findByPeriod(LocalDate period) {
+        System.out.println("period: "+ period);
+        return paymentRepository.findByPeriod(period);
     }
 }

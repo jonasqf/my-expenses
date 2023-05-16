@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,6 +14,7 @@ import java.util.UUID;
 public class PaymentController {
 
     private final PaymentService transactionService;
+    private LocalDate period;
 
     public PaymentController(PaymentService transactionService) {
         this.transactionService = transactionService;
@@ -32,6 +34,11 @@ public class PaymentController {
         return new ResponseEntity<>(findAll, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/byPeriod/{period}")
+    public ResponseEntity<Collection<Payment>> findByPeriod(@PathVariable LocalDate period) {
+        Collection<Payment> findByPeriod = transactionService.findByPeriod(period);
+        return new ResponseEntity<>(findByPeriod, HttpStatus.OK);
+    }
     @GetMapping(path = "/{id}")
     public ResponseEntity<Payment> findById(@PathVariable UUID id){
         Optional<Payment> findById = transactionService.findById(id);
