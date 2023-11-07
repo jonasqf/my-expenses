@@ -10,7 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,9 +33,7 @@ class BillIntegrationTest {
     @Test
     void creationWorksThroughAllLayers() throws Exception {
         UUID billId = UUID.randomUUID();
-        Bill sut = new Bill("Water bill",
-                            new BigDecimal("100.00"),
-                            new Date());
+        Bill sut = new Bill("Water bill", new BigDecimal("100.00"), LocalDate.now());
         sut.setId(billId);
 
         mockMvc.perform(post("/api/v1/bills")
