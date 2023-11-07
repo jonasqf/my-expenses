@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
@@ -19,12 +19,12 @@ public class Bill {
     private UUID id;
     private String description;
     private BigDecimal amount;
-    private Date dueDate;
+    private LocalDate dueDate;
 
     public Bill(){
 
     }
-    public Bill(String description, BigDecimal amount, Date dueDate) {
+    public Bill(String description, BigDecimal amount, LocalDate dueDate) {
         this.description = description;
         this.amount = amount;
         this.dueDate = dueDate;
